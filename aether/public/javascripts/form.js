@@ -43,42 +43,28 @@ $('.buttons').click(function() {
     $('.buttons').css("background-color", "lightblue");
     $(this).css("background-color", "gray");
     if ($(this).attr('id') == "problems-button") {
+      $('.sub-buttons').css("display", "none");
       $('.problem-buttons').css("display", "initial");
-      $('.print-buttons').css("display", "none");
-      $('.suggestion-buttons').css("display", "none");
-      $('.question-buttons').css("display", "none");
     }
     else if ($(this).attr('id') == "prints-button") {
+      $('.sub-buttons').css("display", "none");
       $('.print-buttons').css("display", "initial");
-      $('.problem-buttons').css("display", "none");
-      $('.suggestion-buttons').css("display", "none");
-      $('.question-buttons').css("display", "none");
     }
     else if ($(this).attr('id') == "suggestions-button") {
+      $('.sub-buttons').css("display", "none");
       $('.suggestion-buttons').css("display", "initial");
-      $('.problem-buttons').css("display", "none");
-      $('.print-buttons').css("display", "none");
-      $('.question-buttons').css("display", "none");
     }
     else if ($(this).attr('id') == "questions-button") {
+      $('.sub-buttons').css("display", "none");
       $('.question-buttons').css("display", "initial");
-      $('.problem-buttons').css("display", "none");
-      $('.print-buttons').css("display", "none");
-      $('.suggestion-buttons').css("display", "none");
     }
   }
   // if button is gray
   else {
     $(this).css("background-color", "lightblue");
-    $('.problem-buttons').css("display", "none");
-    $('.print-buttons').css("display", "none");
-    $('.suggestion-buttons').css("display", "none");
-    $('.question-buttons').css("display", "none");
+    $('.sub-buttons').css("display", "none");
   }
-  $('.problem-buttons').css("background-color", "lightblue");
-  $('.print-buttons').css("background-color", "lightblue");
-  $('.suggestion-buttons').css("background-color", "lightblue");
-  $('.question-buttons').css("background-color", "lightblue");
+  $('.sub-buttons').css("background-color", "lightblue");
 });
 
 $('.problem-buttons').click(function() {
@@ -150,61 +136,32 @@ function addNewSection() {
   sectionCount++;
 
   // set up input title section
-  var newInputTitle = document.createElement("input");
-
-  var typeAtt = document.createAttribute("type");
-  typeAtt.value = "text";
-  newInputTitle.setAttributeNode(typeAtt);
-
-  var classAtt = document.createAttribute("class");
-  classAtt.value = "title";
-  newInputTitle.setAttributeNode(classAtt);
-
-  var nameAtt = document.createAttribute("name");
-  nameAtt.value = "title" + sectionCount;
-  newInputTitle.setAttributeNode(nameAtt);
-
-  var placeholderAtt = document.createAttribute("placeholder");
-  placeholderAtt.value = "Title";
-  newInputTitle.setAttributeNode(placeholderAtt);
+  $('<input/>', {
+    'type': 'text',
+    'class': 'title',
+    'name': 'title'+sectionCount,
+    'placeholder': 'Title'
+  }).appendTo(separation);
 
   // set up toolbar section
-  var newToolbar = document.createElement("div");
+  $('<div/>', {
+    'class': 'toolbar',
+  }).appendTo(separation);
 
-  var toolClassAtt = document.createAttribute("class");
-  toolClassAtt.value = "toolbar";
-  newToolbar.setAttributeNode(toolClassAtt);
 
   // set up editor section
-  var newEditor = document.createElement("input");
-
-  var editorTypeAtt = document.createAttribute("type");
-  editorTypeAtt.value = "text"
-  newEditor.setAttributeNode(editorTypeAtt);
-
-  var editorClassAtt = document.createAttribute("class");
-  editorClassAtt.value = "editor";
-  newEditor.setAttributeNode(editorClassAtt);
-
-  var editorNameAtt = document.createAttribute("name");
-  editorNameAtt.value = "content" + sectionCount;
-  newEditor.setAttributeNode(editorNameAtt);
-
-  var newSeparation = document.createElement("div");
-
-  var separationIdAtt = document.createAttribute("id");
-  separationIdAtt.value = "separation" + sectionCount;
-  newSeparation.setAttributeNode(separationIdAtt);
+  $('<input/>', {
+    'type': 'text',
+    'class': 'editor',
+    'name': 'content'+sectionCount,
+    'placeholder': 'Write description'
+  }).appendTo(separation);
 
 
-  separation.appendChild(newInputTitle);
-  separation.appendChild(newToolbar);
-  separation.appendChild(newEditor);
-  separation.appendChild(newSeparation);
+  $('<div/>', {
+    'id': 'separation'+sectionCount
+  }).appendTo(separation);
 
-  // print name of title and editor
-  console.log(newInputTitle.getAttribute("name"));
-  console.log(newEditor.getAttribute("name"));
 }
 
 

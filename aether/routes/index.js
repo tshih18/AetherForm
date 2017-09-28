@@ -32,6 +32,15 @@ router.get('/getData', function(request, response) {
   mongo.connect(url, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
+
+    var collection = db.collection('users');
+    collection.find({}).toArray(function(error, result) {
+      assert.equal(null, error);
+      console.log(result);
+      response.redirect('/');
+      db.close();
+    });
+
     // cursor pointing to data we get back
     /*var cursor = db.collection('data').find();
     // get actual data
@@ -44,15 +53,6 @@ router.get('/getData', function(request, response) {
       console.log(result);
       //response.render('index', {item: result})
     });*/
-
-    var collection = db.collection('users');
-    collection.find({}).toArray(function(error, result) {
-      assert.equal(null, error);
-      console.log(result);
-      response.redirect('/');
-      db.close();
-    });
-
   })
 });
 
@@ -72,7 +72,6 @@ router.post('/insert', function(request, response) {
   var items = [];
 
   for (var i = 0; i < dictionarySize; i+=2) {
-
     var item = {
       title: dictionaryData[dictionaryKeys[i]],
       content: dictionaryData[dictionaryKeys[i+1]]
@@ -80,9 +79,7 @@ router.post('/insert', function(request, response) {
 
     // print item to insert
     console.log(item);
-
     items.push(item);
-
   }
 
   console.log("All items" + items);
@@ -104,11 +101,8 @@ router.post('/insert', function(request, response) {
     })*/
     db.collection('users').insert(items, function() {
       assert.equal(null, error);
-      //if (error) throw error;
-      //else {
-        console.log("successfully inserted");
-        db.close();
-      //}
+      console.log("successfully inserted");
+      db.close();
     });
   });
 

@@ -106,7 +106,7 @@
   padding-left: 15px;
 }
 
-.problem-buttons {
+.sub-buttons {
   background-color: lightblue;
   border-radius: 10px;
   padding-top: 5px;
@@ -149,14 +149,6 @@
   padding-left: 15px;
 }
 
-.print-buttons {
-  background-color: lightblue;
-  border-radius: 10px;
-  padding-top: 5px;
-  margin: 3px;
-  display: none;
-}
-
 #other-prints-button {
   float: right;
   width: 60px;
@@ -178,14 +170,6 @@
   padding-left: 15px;
 }
 
-.suggestion-buttons {
-  background-color: lightblue;
-  border-radius: 10px;
-  padding-top: 5px;
-  margin: 3px;
-  display: none;
-}
-
 #other-suggestion-button {
   float: right;
   width: 60px;
@@ -205,14 +189,6 @@
   width: 103px;
   height: 23px;
   padding-left: 15px;
-}
-
-.question-buttons {
-  background-color: lightblue;
-  border-radius: 10px;
-  padding-top: 5px;
-  margin: 3px;
-  display: none;
 }
 
 #other-question-button {
@@ -239,7 +215,7 @@
 .title {
   font-size: 1.5em;
   margin: auto;
-  width: 50%;
+  width: 40%;
 }
 
 .editor {

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aether Form</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Main Quill library -->
+    <script src="https://cdn.quilljs.com/1.1.3/quill.js"></script>
+    <script src="https://cdn.quilljs.com/1.1.3/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- styles -->
+    <link href="/stylesheets/parseJSON.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+
+  <form action="/getJson" method="get">
+
+    <h1 id="aether-title">
+      <a href="http://www.aether1.com" id="site-link" target="_blank">
+        <div id="top-border"></div>
+        Aether<br>Bioprinter
+        <div id="bot-border"></div>
+      </a>
+    </h1>
+    <div class="break"></div>
+
+
+    <!-- FORM TITLE -->
+    <div class="title element">Print Document</div>
+
+    <!-- Document version -->
+    <div class="key" id="docver">Document Version:</div>
+    <div class="value" id="docver-val"></div>
+    <div class="break element"></div>
+
+    <!-- ID -->
+    <div class="key" id="id">ID:</div>
+    <div class="value" id="id-val"></div>
+    <div class="break element"></div>
+
+    <!-- Staged User Settings -->
+    <div class="header stagedUserSettings-header">Staged User Settings</div>
+    <div class="element"></div>
+    <div id="separation"></div>
+
+    <!-- TOOLS -->
+    <div class="header tools-header">Tools</div>
+    <div class="element"></div>
+    <div id="separation0"></div>
+
+    <!-- MACROS -->
+    <div class="header macros-header">Macros</div>
+    <div class="element"></div>
+    <div id="separation1"></div>
+
+    <!-- OEMLAYER -->
+    <div class="header oemLayer-header">OEM Layer</div>
+    <div class="element"></div>
+    <div id="separation2"></div>
+
+    <!-- Active Quality Key-->
+    <div class="header activeQualityKey-header">Active Quality Key</div>
+    <div class="element"></div>
+    <div class="key" id="ActiveQualityKey">Active Quality Key:</div>
+    <div class="value" id="ActiveQualityKey_val"></div>
+    <div class="break element"></div>
+
+    <!-- Material Settings Keys -->
+    <div class="header materialSettingsKeys-header">Material Settings Keys</div>
+    <div class="element"></div>
+    <div id="separation3"></div>
+
+    <!-- User Layer -->
+    <div class="header userLayer-header">User Layer</div>
+    <div class="element"></div>
+    <div id="separation4"></div>
+
+    <!-- Material Layers -->
+    <div class="header materialLayers-header">Material Layers</div>
+    <div class="element"></div>
+    <div id="separation5"></div>
+
+    <!-- Quality Layers -->
+    <div class="header qualityLayers-header">Quality Layers</div>
+    <div class="element"></div>
+    <div id="separation6"></div>
+
+  </form>
+
+    <script src="/javascripts/parseJSON.js" type="text/javascript"></script>
+
+
+</body>
+
+</html>

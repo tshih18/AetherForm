@@ -1,0 +1,78 @@
+#aether-title {
+  float: left;
+  text-align: center;
+  position: relative;
+  left: 30px;
+  width: 200px;
+}
+
+#site-link {
+  color: black;
+  text-decoration: none;
+}
+
+#top-border {
+  border-top: 3px solid black;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+  height: 10px;
+}
+
+#bot-border {
+  border-bottom: 3px solid black;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
+  height: 10px;
+}
+
+.break{
+  clear: both;
+}
+
+.title {
+  margin: auto;
+  text-align: center;
+  padding: 20px 0 20px 0;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.element {
+  border-bottom: 1px solid grey;
+}
+
+.key {
+  float: left;
+  margin: 0 5px 0 5px;
+  width: 40%;
+  border-right: 1px solid grey;
+}
+
+.value {
+  margin-left: 5px;
+  width: 100%;
+}
+
+.header {
+  font-size: 1.5em;
+  padding-left: 5px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+form {
+  border: 2px solid black;
+  padding: 5px 0 5px 0;
+}
+
+/*
+[id^='width_val'] {
+  border-bottom: 2px solid black;
+}
+
+[id^='LastModified_val'] {
+  border-bottom: 2px solid black;
+}
+*/

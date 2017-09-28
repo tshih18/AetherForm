@@ -42,11 +42,10 @@
 
       <form action="/insert" method="post">
 
-
-        <!-- Where users will fill out their name to know where to save data-->
+        <!-- Where users will fill out their name to know where to save data
         <div id="username-field">
           <input type="text" id="name" name="name" placeholder="Name">
-        </div>
+        </div>-->
 
         <div class="section">
 
@@ -58,23 +57,23 @@
 
           <div class="break"></div>
 
-          <div class="problem-buttons" id="other-problems-button">Others</div>
-          <div class="problem-buttons" id="connectivity-problems-button">Connectivity</div>
-          <div class="problem-buttons" id="electrical-problems-button">Electrical</div>
-          <div class="problem-buttons" id="mechanical-problems-button">Mechanical</div>
-          <div class="problem-buttons" id="software-problems-button">Software</div>
+          <div class="problem-buttons sub-buttons" id="other-problems-button">Others</div>
+          <div class="problem-buttons sub-buttons" id="connectivity-problems-button">Connectivity</div>
+          <div class="problem-buttons sub-buttons" id="electrical-problems-button">Electrical</div>
+          <div class="problem-buttons sub-buttons" id="mechanical-problems-button">Mechanical</div>
+          <div class="problem-buttons sub-buttons" id="software-problems-button">Software</div>
 
-          <div class="print-buttons" id="other-prints-button">Others</div>
-          <div class="print-buttons" id="setting-prints-button">Settings</div>
-          <div class="print-buttons" id="material-prints-button">Materials</div>
+          <div class="print-buttons sub-buttons" id="other-prints-button">Others</div>
+          <div class="print-buttons sub-buttons" id="setting-prints-button">Settings</div>
+          <div class="print-buttons sub-buttons" id="material-prints-button">Materials</div>
 
-          <div class="suggestion-buttons" id="other-suggestion-button">Others</div>
-          <div class="suggestion-buttons" id="feature-suggestion-button">Features</div>
-          <div class="suggestion-buttons" id="configuration-suggestion-button">Configuration</div>
+          <div class="suggestion-buttons sub-buttons" id="other-suggestion-button">Others</div>
+          <div class="suggestion-buttons sub-buttons" id="feature-suggestion-button">Features</div>
+          <div class="suggestion-buttons sub-buttons" id="configuration-suggestion-button">Configuration</div>
 
-          <div class="question-buttons" id="other-question-button">Others</div>
-          <div class="question-buttons" id="software-question-button">Software</div>
-          <div class="question-buttons" id="printer-question-button">Printer</div>
+          <div class="question-buttons sub-buttons" id="other-question-button">Others</div>
+          <div class="question-buttons sub-buttons" id="software-question-button">Software</div>
+          <div class="question-buttons sub-buttons" id="printer-question-button">Printer</div>
 
           <input type="text" class="title" name="title0" placeholder="Title">
           <!-- Create the toolbar container -->
@@ -100,9 +99,15 @@
 
     </div>
 
-    <!-- reference has to be here to work? -->
+    <a href="displayJSON.html">Load JSON</a>
+
+
+
+    <!-- reference has to be here to work -->
     <script src="/javascripts/form.js" type="text/javascript"></script>
-    <!--<script src="../routes/index.js" type="text/javascript"></script>-->
+    <!--<script src="/javascripts/parseJSON.js" type="text/javascript"></script>-->
+
 
 </body>
+
 </html>
