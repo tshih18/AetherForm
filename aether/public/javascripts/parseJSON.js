@@ -27,6 +27,11 @@ $.getJSON("filledData.json", function(data) {
     return el;
   });
 
+  // add # of tools to tools header
+  if (toolsData.length != 0) {
+    $('.tools-header').append(" - " + toolsData.length);
+  }
+
   // loop through all Tools[]
   for (var i = 0; i < toolsData.length; i++) {
     // map all tool keys in Tools[i]
@@ -170,10 +175,15 @@ $.getJSON("filledData.json", function(data) {
 function createKeysValues (key, value, length, appendID) {
   for (var i = 0; i < length; i++) {
 
+    // remove _ and capitalze
+    var text = key[i].replace(/_/g, " ");
+    text = titleCase(text);
+
+    // insert key
     $('<div/>', {
       'class': 'key',
       'id': key[i],
-      text: key[i] + ':'
+      text: text + ':'
     }).appendTo(appendID);
 
     // handle empty value case
@@ -181,6 +191,7 @@ function createKeysValues (key, value, length, appendID) {
       value[i] = "N/A"
     }
 
+    // insert value
     $('<div/>', {
       'class': 'value',
       'id': key[i] + '_val',
@@ -197,12 +208,19 @@ function createKeysValues (key, value, length, appendID) {
 // this is for objects that are arrays
 function createUniqueKeysValues (key, value, i, length, appendID) {
   for (var j = 0; j < length; j++) {
+
+    // remove _ and capitalze
+    var text = key[j].replace(/_/g, " ");
+    text = titleCase(text);
+
+    // inset key
     $('<div/>', {
       'class': 'key',
       'id': key[j]+i,
-      text: key[j] + ':'
+      text: text + ':'
     }).appendTo(appendID);
 
+    // inset value
     $('<div/>', {
       'class': 'value',
       'id': key[j]+"_val"+i,
@@ -214,4 +232,19 @@ function createUniqueKeysValues (key, value, i, length, appendID) {
       'class': 'break element'
     }).appendTo(appendID);
   }
+
+  // create spacing
+  $('<br>').appendTo(appendID);
+}
+
+// capitalize first letter of every word
+function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       // You do not need to check if i is larger than splitStr length, as your for does that for you
+       // Assign it back to the array
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+   }
+   // Directly return the joined string
+   return splitStr.join(' ');
 }

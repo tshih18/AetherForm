@@ -237,7 +237,6 @@
   background-color: gray;
 }
 
-.item {
-  color: white;
-  text-decoration: none;
+a {
+  color: black;
 }

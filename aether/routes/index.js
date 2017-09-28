@@ -6,6 +6,8 @@ var router = express.Router();
 var fs = require('fs');
 // import mongodb
 var mongo = require('mongodb').MongoClient;
+// get object ID
+var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
 
@@ -32,7 +34,6 @@ router.get('/getData', function(request, response) {
   mongo.connect(url, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
-
     var collection = db.collection('users');
     collection.find({}).toArray(function(error, result) {
       assert.equal(null, error);
@@ -108,7 +109,24 @@ router.post('/insert', function(request, response) {
 
 });
 
+// delete data from database
+router.post('/deleteData', function(request, response) {
 
+  // get id to be deleted
+  var id = request.body.id;
+
+  response.redirect('/');
+
+  mongo.connect(url, function(error, db) {
+    assert.equal(null, error);
+    db.collection('users').deleteOne({"_id": objectID(id)}, function (error, result) {
+      assert.equal(null, error);
+      console.log("Item: " + id + " has been deleted");
+      db.close();
+    })
+  });
+
+});
 
 
 

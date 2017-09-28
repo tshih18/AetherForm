@@ -85,21 +85,24 @@
           <div id="separation0"></div>
 
 
-          <button type="submit" id="submit">Submit</button>
+          <button type="submit" id="submit">Save</button>
         </div>
       </form>
-
-
-      <div class="item">
-        <a href="/getData">Load Data</a>
-      </div>
-
 
       <img src="/images/plus.png" id="plus">
 
     </div>
 
+
+    <a href="/getData">Load Data</a>
+    <br>
     <a href="displayJSON.html">Load JSON</a>
+    <br>
+
+    <form action="/deleteData" method="post">
+      <input type="text" id="id" name="id">
+      <button type="submit">Delete</button>
+    </form>
 
 
 
