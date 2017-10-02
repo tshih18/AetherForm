@@ -11,6 +11,30 @@ var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
 
+
+// import phantom to render pdf file
+var phantom = require('phantom');
+var jsonURL = "http://localhost:3000/displayJSON.html";
+
+// makes pdf super long and skinny
+/*router.get('/getPDF', function(request, response) {
+  phantom.create().then(function(ph) {
+      ph.createPage().then(function(page) {
+          page.open(jsonURL).then(function(status) {
+              page.render('data.pdf').then(function() {
+                page.property('viewportSize', {width: 5000, height: 5000}).then(function() {
+                  console.log('Page Rendered');
+                  response.redirect('/displayJSON.html');
+                  ph.exit();
+                })
+              });
+          });
+      });
+  });
+
+})*/
+
+
 // parse response body
 var bodyParser = require('body-parser')
 // parse application/x-www-form-urlencoded
@@ -61,9 +85,6 @@ router.get('/getData', function(request, response) {
 router.post('/insert', function(request, response) {
 
   // save every section in database
-  //console.log(request.body);
-  //console.log(Object.keys(request.body).length);
-
   var dictionarySize = Object.keys(request.body).length;
   var numOfSections = dictionarySize/2;
 

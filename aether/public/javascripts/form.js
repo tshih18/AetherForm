@@ -122,6 +122,7 @@ $('#submit').click(function() {
   var value = quill.container.firstChild.innerHTML;
   console.log(key, value);*/
   console.log("submit clicked");
+  
 });
 
 //var newSection = '<div class="section"><form action="/insert" method="post"><input type="text" class="title" name="title" placeholder="Title"><div class="toolbar"></div><input type="text" class="editor" name="content"> </form></div>'

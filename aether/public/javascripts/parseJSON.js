@@ -1,10 +1,11 @@
+// filling out json data in webpage
 $.getJSON("filledData.json", function(data) {
 
   // set document version value
-  $('#docver-val').html(data.DocumentVersion);
+  $('#docver-val').val(data.DocumentVersion);
 
   // set id value
-  $('#id-val').html(data.ID);
+  $('#id-val').val(data.ID);
 
   /********** STAGED USER SETTINGS **********/
   // map all staged user settings keys
@@ -44,6 +45,12 @@ $.getJSON("filledData.json", function(data) {
       return el;
     });
 
+    // header for macros
+    $('<div/>', {
+      class: 'sub-header',
+      text: 'Tool ' + i
+    }).appendTo($('#separation0'));
+
     // set all keys+values for each Tools[i]
     createUniqueKeysValues(toolsKeys, toolsVals, i, toolsKeys.length, $('#separation0'));
   }
@@ -66,6 +73,13 @@ $.getJSON("filledData.json", function(data) {
       return el;
     });
 
+    // header for macros
+    $('<div/>', {
+      class: 'sub-header',
+      text: 'Macros ' + i
+    }).appendTo($('#separation1'));
+
+
     // set all keys+values for each Macros[i]
     createUniqueKeysValues(macrosKeys, macrosVals, i, macrosKeys.length, $('#separation1'));
   }
@@ -87,19 +101,19 @@ $.getJSON("filledData.json", function(data) {
 
   /********** ACTIVEQUALITYKEY **********/
   if (data.ActiveQualityKey == "") {
-    $('#ActiveQualityKey_val').html("N/A");
+    $('#ActiveQualityKey_val').val("N/A");
   }
   else {
-    $('#ActiveQualityKey_val').html(data.ActiveQualityKey);
+    $('#ActiveQualityKey_val').val(data.ActiveQualityKey);
   }
 
   /********** MATERIAL SETTINGS KEYS **********/
 
   for (var i = 0; i < data.MaterialSettingsKeys.length; i++) {
-    $('<div/>', {
+    $('<textarea/>', {
       'class': 'value',
       'id': data.MaterialSettingsKeys[i] + '_val',
-      text: data.MaterialSettingsKeys[i]
+      val: data.MaterialSettingsKeys[i]
     }).appendTo($('#separation3'));
 
     // break floats
@@ -144,6 +158,13 @@ $.getJSON("filledData.json", function(data) {
       return el;
     });
 
+    // header for material layers
+    $('<div/>', {
+      class: 'sub-header',
+      text: 'Material ' + i
+    }).appendTo($('#separation5'));
+
+
     // set all keys+values for each materialLayersData[i]
     createUniqueKeysValues(materialLayersKeys, materialLayersVals, i, materialLayersKeys.length, $('#separation5'));
   }
@@ -166,6 +187,12 @@ $.getJSON("filledData.json", function(data) {
       return el;
     });
 
+    // header for quality layers
+    $('<div/>', {
+      class: 'sub-header',
+      text: 'Quality Layer ' + i
+    }).appendTo($('#separation6'));
+
     // set all keys+values for each materialLayersData[i]
     createUniqueKeysValues(qualityLayersKeys, qualityLayersVals, i, qualityLayersKeys.length, $('#separation6'));
   }
@@ -173,6 +200,7 @@ $.getJSON("filledData.json", function(data) {
 
 // this is for regular objects
 function createKeysValues (key, value, length, appendID) {
+
   for (var i = 0; i < length; i++) {
 
     // remove _ and capitalze
@@ -192,10 +220,10 @@ function createKeysValues (key, value, length, appendID) {
     }
 
     // insert value
-    $('<div/>', {
-      'class': 'value',
+    $('<textarea>', {
+      'class': 'value input',
       'id': key[i] + '_val',
-      text: value[i]
+      val: value[i]
     }).appendTo(appendID);
 
     // break floats
@@ -207,6 +235,7 @@ function createKeysValues (key, value, length, appendID) {
 
 // this is for objects that are arrays
 function createUniqueKeysValues (key, value, i, length, appendID) {
+
   for (var j = 0; j < length; j++) {
 
     // remove _ and capitalze
@@ -220,11 +249,11 @@ function createUniqueKeysValues (key, value, i, length, appendID) {
       text: text + ':'
     }).appendTo(appendID);
 
-    // inset value
-    $('<div/>', {
-      'class': 'value',
+    // insert value
+    $('<textarea>', {
+      'class': 'value input',
       'id': key[j]+"_val"+i,
-      text: value[j]
+      val: value[j]
     }).appendTo(appendID);
 
     // break floats
@@ -232,6 +261,7 @@ function createUniqueKeysValues (key, value, i, length, appendID) {
       'class': 'break element'
     }).appendTo(appendID);
   }
+
 
   // create spacing
   $('<br>').appendTo(appendID);
@@ -248,3 +278,53 @@ function titleCase(str) {
    // Directly return the joined string
    return splitStr.join(' ');
 }
+
+// adjust input field when page is loaded
+$(document).ready(function () {
+  // loop for each input tag
+  $('textarea').each(function() {
+
+    $(this).css("width", ($(this).val().length + 1) * 7);
+
+    // if too long, span multiple lines
+    if ($(this).val().length > 70) {
+      $(this).css("width", 400);
+      $(this).css("line-height", 1);
+    }
+    if ($(this).val().length > 140) {
+      $(this).css("height", 40);
+    }
+  })
+
+  // adjust input field when typing
+  $('textarea').keydown(function() {
+    // +1 to account for current pressed key
+    console.log($(this).val().length)
+
+    // only adjust width when text area is small
+    if ($(this).val().length < 70) {
+      $(this).css("width", ($(this).val().length + 1) * 7);
+    }
+
+  });
+});
+
+  /* does not save css
+    $('#getPDF').click(function () {
+      //save as PDF
+      var doc = new jsPDF('p', 'mm', 'a4');
+      var specialElementHandlers = {
+          '#editor': function (element, renderer) {
+              return true;
+          }
+      };
+
+
+
+      doc.fromHTML($('#form').get(0), 15, 15, {
+          'width': 300
+          //'elementHandlers': specialElementHandlers
+      });
+      doc.save('sample-file.pdf');
+    });
+*/
