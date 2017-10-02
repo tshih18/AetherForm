@@ -46,38 +46,27 @@ router.use(bodyParser.json())
 console.log("server started");
 
 var url = 'mongodb://localhost:27017/users';
-
+var theoURL = 'mongodb://localhost:27017/Theo';
 
 // open static files in folder
 router.use(express.static('views'));
 
 // get data from database
-router.get('/getData', function(request, response) {
+// use post because we want to get the specific collection name to show
+router.post('/getData', function(request, response) {
   var result = [];
-  //console.log(sectionCount);
+  var name = request.body.collectionName;
+
   mongo.connect(url, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
-    var collection = db.collection('users');
+    var collection = db.collection(name);
     collection.find({}).toArray(function(error, result) {
       assert.equal(null, error);
       console.log(result);
       response.redirect('/');
       db.close();
     });
-
-    // cursor pointing to data we get back
-    /*var cursor = db.collection('data').find();
-    // get actual data
-    console.log(cursor);
-    cursor.forEach(function(document, error) {
-      assert.equal(null, error);
-      result.push(document);
-    }, function() {
-      db.close();
-      console.log(result);
-      //response.render('index', {item: result})
-    });*/
   })
 });
 
@@ -88,12 +77,15 @@ router.post('/insert', function(request, response) {
   var dictionarySize = Object.keys(request.body).length;
   var numOfSections = dictionarySize/2;
 
+  // array of values
   var dictionaryData = request.body;
+  // array of keys
   var dictionaryKeys = Object.keys(dictionaryData);
 
   var items = [];
+  var name = dictionaryData[dictionaryKeys[0]];
 
-  for (var i = 0; i < dictionarySize; i+=2) {
+  for (var i = 1; i < dictionarySize; i+=2) {
     var item = {
       title: dictionaryData[dictionaryKeys[i]],
       content: dictionaryData[dictionaryKeys[i+1]]
@@ -121,9 +113,18 @@ router.post('/insert', function(request, response) {
       console.log("Item inserted in database");
       db.close();
     })*/
+    /*
+    // insert under users
     db.collection('users').insert(items, function() {
       assert.equal(null, error);
       console.log("successfully inserted");
+      db.close();
+    });*/
+
+    // insert under name under users
+    db.collection(name).insert(items, function() {
+      assert.equal(null, error);
+      console.log("successfully inserted in " + name);
       db.close();
     });
   });
@@ -133,14 +134,16 @@ router.post('/insert', function(request, response) {
 // delete data from database
 router.post('/deleteData', function(request, response) {
 
+  // get collection name to delete from
+  var name = request.body.collectionName;
+
   // get id to be deleted
   var id = request.body.id;
-
   response.redirect('/');
 
   mongo.connect(url, function(error, db) {
     assert.equal(null, error);
-    db.collection('users').deleteOne({"_id": objectID(id)}, function (error, result) {
+    db.collection(name).deleteOne({"_id": objectID(id)}, function (error, result) {
       assert.equal(null, error);
       console.log("Item: " + id + " has been deleted");
       db.close();

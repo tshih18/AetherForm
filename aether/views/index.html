@@ -27,6 +27,8 @@
 <body>
 
     <div id="container">
+
+      <!-- main logo of webpage -->
       <h1 id="aether-title">
         <a href="http://www.aether1.com" id="site-link" target="_blank">
           <div id="top-border"></div>
@@ -37,8 +39,8 @@
 
       <div class="break"></div>
 
+      <!-- website tit  le -->
       <div id="site-title">Aether Form</div>
-
 
       <form action="/insert" method="post">
 
@@ -94,13 +96,23 @@
     </div>
 
 
-    <a href="/getData">Load Data</a>
+    <form action="/getData" method="post">
+      <h4>Get Data</h4>
+      Collection Name: <input type="text" id="collectionName" name="collectionName">
+      <button type="submit">Get Data</button>
+    </form>
+
     <br>
+
     <a href="displayJSON.html">Load JSON</a>
     <br>
 
     <form action="/deleteData" method="post">
-      <input type="text" id="id" name="id">
+      <h4>Delete Data</h4>
+
+      Collection Name: <input type="text" id="collectionName" name="collectionName">
+      ID: <input type="text" id="id" name="id">
+
       <button type="submit">Delete</button>
     </form>
 
