@@ -3,6 +3,7 @@
   /*background-image: url(https://pixnio.com/free-images/2017/09/10/2017-09-10-18-15-08.jpg);*/
   background-image: url(/images/aetherBackground.jpg);
   background-size: cover;
+  padding-bottom: 50px;
 }
 
 #aether-title {
@@ -78,29 +79,29 @@
   margin: 3px;
 }
 
+/*
 #prints-button {
   float: right;
   width: 55px;
   height: 23px;
   padding-left: 15px;
+}*/
 
-}
-
-#problems-button {
+[id^='problems-button'] {
   float: right;
   width: 77px;
   height: 23px;
   padding-left: 15px;
 }
 
-#questions-button {
+[id^='questions-button'] {
   float: right;
   width: 80px;
   height: 23px;
   padding-left: 15px;
 }
 
-#suggestions-button {
+[id^='suggestions-button'] {
   float: right;
   width: 93px;
   height: 23px;
@@ -225,13 +226,16 @@
 }
 
 #plus {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  position: relative;
-  float: right;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
   border-width: 2px;
   border: 1px solid black;
+  position: relative;
+  left: -10px;
+  float: right;
+
 }
 
 #plus:hover {

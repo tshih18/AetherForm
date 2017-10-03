@@ -36,37 +36,56 @@ var quill = new Quill('.editor', {
     theme: 'snow'
 });
 
-$('.buttons').click(function() {
+// make all dynamically added buttons work
+$('.section').on('click', '.buttons', function() {
   // if button is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
     // make only one button selectable
     $('.buttons').css("background-color", "lightblue");
     $(this).css("background-color", "gray");
-    if ($(this).attr('id') == "problems-button") {
+
+    //console.log($(this).attr("id"));
+
+    // split id on -
+    var splitID = $(this).attr("id").split('-');
+    var firstID = splitID[0];
+    var firstIDNum = splitID[2];
+
+    //if ($(this).attr('id') == "problems-button") {
+    //if ($('[id^=problems-button]')) {
+    if (firstID == "problems") {
       $('.sub-buttons').css("display", "none");
-      $('.problem-buttons').css("display", "initial");
+      $('.problem-buttons-'+firstIDNum).css("display", "initial");
     }
-    else if ($(this).attr('id') == "prints-button") {
+    /*else if ($(this).attr('id') == "prints-button") {
       $('.sub-buttons').css("display", "none");
       $('.print-buttons').css("display", "initial");
-    }
-    else if ($(this).attr('id') == "suggestions-button") {
+    }*/
+    //else if ($(this).attr('id') == "suggestions-button") {
+    //else if ($('[id^=suggestions-button]')) {
+    //else if ($(this[id^="suggestions-button"])) {
+    else if (firstID == "suggestions") {
       $('.sub-buttons').css("display", "none");
-      $('.suggestion-buttons').css("display", "initial");
+      $('.suggestion-buttons-'+firstIDNum).css("display", "initial");
     }
-    else if ($(this).attr('id') == "questions-button") {
+    //else if ($(this).attr('id') == "questions-button") {
+    //else if ($('[id^=questions-button]')) {
+    //else if ($(this[id^='questions-button'])) {
+    else if (firstID == "questions") {
       $('.sub-buttons').css("display", "none");
-      $('.question-buttons').css("display", "initial");
+      $('.question-buttons-'+firstIDNum).css("display", "initial");
     }
   }
-  // if button is gray
+  // if button is gray change back to lightblue
   else {
     $(this).css("background-color", "lightblue");
     $('.sub-buttons').css("display", "none");
   }
+  // de-select all other sub-buttons
   $('.sub-buttons').css("background-color", "lightblue");
 });
 
+// handle sub-buttons click events -- need to make it dynamicly active
 $('.problem-buttons').click(function() {
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
 
@@ -75,10 +94,9 @@ $('.problem-buttons').click(function() {
   }
   else {
     $(this).css("background-color", "lightblue");
-
   }
 })
-
+/*
 $('.print-buttons').click(function() {
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
 
@@ -89,7 +107,7 @@ $('.print-buttons').click(function() {
     $(this).css("background-color", "lightblue");
 
   }
-})
+})*/
 
 $('.suggestion-buttons').click(function() {
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
@@ -99,7 +117,6 @@ $('.suggestion-buttons').click(function() {
   }
   else {
     $(this).css("background-color", "lightblue");
-
   }
 })
 
@@ -111,16 +128,8 @@ $('.question-buttons').click(function() {
   }
   else {
     $(this).css("background-color", "lightblue");
-
   }
 })
-
-function button_onClick() {
-   $('#a').click();
-}
-function linkClicked() {
-    console.log("get data clicked");
-}
 
 
 $('#submit').click(function() {
@@ -143,6 +152,35 @@ function addNewSection() {
 
   // make names for each section unique
   sectionCount++;
+
+  // add buttons
+  $('<div/>', {
+    'class': 'buttons',
+    'name': 'suggestions-button-'+sectionCount,
+    'id': 'suggestions-button-'+sectionCount,
+    'html': 'Suggestions'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'buttons',
+    'name': 'questions-button-'+sectionCount,
+    'id': 'questions-button-'+sectionCount,
+    'html': 'Questions'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'buttons',
+    'name': 'problems-button-'+sectionCount,
+    'id': 'problems-button-'+sectionCount,
+    'html': 'Problems'
+  }).appendTo(separation);
+
+  // add sub-buttons
+
+
+
+
+
 
   // set up input title section
   $('<input/>', {
@@ -172,7 +210,6 @@ function addNewSection() {
   }).appendTo(separation);
 
 }
-
 
 
 $('#plus').click(function() {

@@ -60,6 +60,8 @@ router.post('/getData', function(request, response) {
   mongo.connect(url, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
+
+    // get data under name collection
     var collection = db.collection(name);
     collection.find({}).toArray(function(error, result) {
       assert.equal(null, error);
@@ -108,18 +110,6 @@ router.post('/insert', function(request, response) {
     console.log("connected to database");
     // insert in db
     console.log(db);
-    /*db.collection('data').insertOne(item, function(error, result) {
-      assert.equal(null, error);
-      console.log("Item inserted in database");
-      db.close();
-    })*/
-    /*
-    // insert under users
-    db.collection('users').insert(items, function() {
-      assert.equal(null, error);
-      console.log("successfully inserted");
-      db.close();
-    });*/
 
     // insert under name under users
     db.collection(name).insert(items, function() {
