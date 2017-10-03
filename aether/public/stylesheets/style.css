@@ -63,7 +63,7 @@
   border: none;
 }
 
-.section {
+div[class^='section'], div[class*=' section'] {
   background-color: white;
   padding: 10px;
   padding-bottom: 20px;
@@ -217,6 +217,31 @@ div[class^='sub-buttons'], div[class*=' sub-buttons'] {
   width: 100%;
   resize: none;
   font-size: 1em;
+}
+
+[id^='closeImg'] {
+  position: absolute;
+  float: left;
+  width: 9px;
+  height: 9px;
+  border-radius: 7px;
+  padding: 3px;
+  background-color: rgb(244, 68, 14);
+}
+
+.closed {
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  opacity: 0;
+}
+
+.closed:hover {
+  opacity: 1;
+}
+
+[id^='closeImg']:active {
+  background-color: rgb(193, 52, 9);
 }
 
 #plus {

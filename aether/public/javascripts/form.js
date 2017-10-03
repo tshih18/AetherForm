@@ -185,9 +185,19 @@ var sectionCount = 0;
 
 function addNewSection() {
 
-  var separation = document.getElementById("separation" + sectionCount);
+  //var separation = document.getElementById("separation" + sectionCount);
+  var separation = $('#separation' + sectionCount);
   // make names for each section unique
   sectionCount++;
+
+  $('<div/>', {
+    'id': 'closeImg-'+sectionCount
+  }).appendTo(separation)
+
+  $('<img/>', {
+    'src': '/images/close.png',
+    'class': 'closed'
+  }).appendTo($('div#closeImg-'+sectionCount))
 
   // add buttons
   $('<div/>', {
@@ -315,7 +325,8 @@ function addNewSection() {
   $('<input/>', {
     'type': 'text',
     'class': 'title',
-    'name': 'title'+sectionCount,
+    'name': 'title-'+sectionCount,
+    'id': 'title-'+sectionCount,
     'placeholder': 'Title'
   }).appendTo(separation);
 
@@ -324,7 +335,8 @@ function addNewSection() {
   $('<textarea/>', {
     'type': 'text',
     'class': 'editor',
-    'name': 'content'+sectionCount,
+    'name': 'content-'+sectionCount,
+    'id': 'content-'+sectionCount,
     'placeholder': 'Write description'
   }).appendTo(separation);
 
@@ -333,6 +345,44 @@ function addNewSection() {
   }).appendTo(separation);
 
 }
+
+// delete section based on numSection
+function deleteSection(numSection) {
+  // remove main buttons
+  $('#suggestions-button-'+numSection).remove();
+  $('#questions-button-'+numSection).remove();
+  $('#problems-button-'+numSection).remove();
+  // remove sub buttons
+  // remove suggestion buttons
+  $('#other-suggestion-button-'+numSection).remove();
+  $('#feature-suggestion-button-'+numSection).remove();
+  $('#configuration-suggestion-button-'+numSection).remove();
+  // remove question buttons
+  $('#other-question-button-'+numSection).remove();
+  $('#software-question-button-'+numSection).remove();
+  $('#printer-question-button-'+numSection).remove();
+  // remove problem buttons
+  $('#other-problems-button-'+numSection).remove();
+  $('#connectivity-problems-button-'+numSection).remove();
+  $('#electrical-problems-button-'+numSection).remove();
+  $('#mechanical-problems-button-'+numSection).remove();
+  $('#software-problems-button-'+numSection).remove();
+  // remove hidden inputs for div buttons
+  $('#tag-'+numSection).remove();
+  $('#sub-tag-'+numSection).remove();
+  // remove input fields
+  $('#title-'+numSection).remove();
+  $('#content-'+numSection).remove();
+  // remove delete button
+  $('#closeImg-'+numSection).remove();
+
+}
+
+$('.section').on('click', '[id^="closeImg"]', function() {
+  var splitID = $(this).attr("id").split('-');
+  var numSection = splitID[1];
+  deleteSection(numSection);
+})
 
 
 $('#plus').click(function() {
