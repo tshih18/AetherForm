@@ -75,6 +75,8 @@ router.post('/getData', function(request, response) {
 // insert data into database
 router.post('/insert', function(request, response) {
 
+  console.log(request.body);
+
   // save every section in database
   var dictionarySize = Object.keys(request.body).length;
   var numOfSections = dictionarySize/2;
@@ -87,18 +89,18 @@ router.post('/insert', function(request, response) {
   var items = [];
   var name = dictionaryData[dictionaryKeys[0]];
 
-  for (var i = 1; i < dictionarySize; i+=2) {
+  for (var i = 1; i < dictionarySize; i+=4) {
     var item = {
-      title: dictionaryData[dictionaryKeys[i]],
-      content: dictionaryData[dictionaryKeys[i+1]]
+      tag: dictionaryData[dictionaryKeys[i]],
+      subtag: dictionaryData[dictionaryKeys[i+1]],
+      title: dictionaryData[dictionaryKeys[i+2]],
+      content: dictionaryData[dictionaryKeys[i+3]]
     };
 
     // print item to insert
     console.log(item);
     items.push(item);
   }
-
-  console.log("All items" + items);
 
   // redirect to home page
   response.redirect('/');

@@ -49,6 +49,11 @@ $('.section').on('click', '[class^="buttons"]', function() {
   // if button is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
 
+    // set value of input main button equal to the text of button pressed
+    var mainButtonVal = $(this).text();
+    $('#tag-'+indexNum).val(mainButtonVal);
+    console.log($('#tag-'+indexNum).val());
+
     // make only one button selectable
     $('.buttons-'+indexNum).css("background-color", "lightblue");
     $(this).css("background-color", "gray");
@@ -69,6 +74,10 @@ $('.section').on('click', '[class^="buttons"]', function() {
   }
   // if button is gray change back to lightblue
   else {
+    // when de-selected remove value from input main button
+    $('#tag-'+indexNum).val("");
+    console.log($('#tag-'+indexNum).val());
+
     $(this).css("background-color", "lightblue");
     // remove all sub-buttons pertaining to that section
     $('.sub-buttons-'+indexNum).css("display", "none");
@@ -85,6 +94,13 @@ $('.section').on('click', '[class^="suggestion-buttons"]', function() {
 
   // if background is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+
+    // set value of input sub button equal to the text of sub button pressed
+    var subButtonVal = $(this).text();
+    $('#sub-tag-'+indexNum).val(subButtonVal);
+    console.log($('#sub-tag-'+indexNum).val());
+
+
     // make all other sub buttons lightblue
     $('.suggestion-buttons-'+indexNum).css("background-color", "lightblue");
     // change that button to gray
@@ -92,6 +108,8 @@ $('.section').on('click', '[class^="suggestion-buttons"]', function() {
   }
   // if background is gray, change back to lightblue
   else {
+    // when de-selected remove value from input sub button
+    $('#sub-tag-'+indexNum).val("");
     $(this).css("background-color", "lightblue");
   }
 })
@@ -104,6 +122,12 @@ $('.section').on('click', '[class^="question-buttons"]', function() {
 
   // if background is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+
+    // set value of input sub button equal to the text of sub button pressed
+    var subButtonVal = $(this).text();
+    $('#sub-tag-'+indexNum).val(subButtonVal);
+    console.log($('#sub-tag-'+indexNum).val());
+
     // make all other sub buttons lightblue
     $('.question-buttons-'+indexNum).css("background-color", "lightblue");
     // change that button to gray
@@ -111,6 +135,8 @@ $('.section').on('click', '[class^="question-buttons"]', function() {
   }
   // if background is gray, change back to lightblue
   else {
+    // when de-selected remove value from input sub button
+    $('#sub-tag-'+indexNum).val("");
     $(this).css("background-color", "lightblue");
   }
 })
@@ -123,6 +149,12 @@ $('.section').on('click', '[class^="problem-buttons"]', function() {
 
   // if background is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+
+    // set value of input sub button equal to the text of sub button pressed
+    var subButtonVal = $(this).text();
+    $('#sub-tag-'+indexNum).val(subButtonVal);
+    console.log($('#sub-tag-'+indexNum).val());
+
     // make all other sub buttons lightblue
     $('.problem-buttons-'+indexNum).css("background-color", "lightblue");
     // change that button to gray
@@ -130,6 +162,8 @@ $('.section').on('click', '[class^="problem-buttons"]', function() {
   }
   // if background is gray, change back to lightblue
   else {
+    // when de-selected remove value from input sub button
+    $('#sub-tag-'+indexNum).val("");
     $(this).css("background-color", "lightblue");
   }
 })
@@ -187,21 +221,21 @@ function addNewSection() {
     'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
     'name': 'other-suggestion-button-'+sectionCount,
     'id': 'other-suggestion-button-'+sectionCount,
-    'html': 'Others'
+    'text': 'Others'
   }).appendTo(separation);
 
   $('<div/>', {
     'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
     'name': 'feature-suggestion-button-'+sectionCount,
     'id': 'feature-suggestion-button-'+sectionCount,
-    'html': 'Features'
+    'text': 'Features'
   }).appendTo(separation);
 
   $('<div/>', {
     'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
     'name': 'configuration-suggestion-button-'+sectionCount,
     'id': 'configuration-suggestion-button-'+sectionCount,
-    'html': 'Configuration'
+    'text': 'Configuration'
   }).appendTo(separation);
 
   // question sub buttons
@@ -262,6 +296,21 @@ function addNewSection() {
     'html': 'Software'
   }).appendTo(separation);
 
+
+  // put hidden input fields to store main/sub buttons
+  $('<input/>', {
+    'type': 'hidden',
+    'name': 'tag-'+sectionCount,
+    'id': 'tag-'+sectionCount
+  }).appendTo(separation);
+
+  $('<input/>', {
+    'type': 'hidden',
+    'name': 'sub-tag-'+sectionCount,
+    'id': 'sub-tag-'+sectionCount
+  }).appendTo(separation);
+
+
   // set up input title section
   $('<input/>', {
     'type': 'text',
@@ -270,10 +319,6 @@ function addNewSection() {
     'placeholder': 'Title'
   }).appendTo(separation);
 
-  /* set up toolbar section
-  $('<div/>', {
-    'class': 'toolbar',
-  }).appendTo(separation);*/
 
   // set up editor section
   $('<textarea/>', {
