@@ -16,7 +16,7 @@ document.getElementsByTagName('head')[0].appendChild(quillMinScript);
 globalsjs.src = 'globals.js';
 document.getElementsByTagName('head')[0].appendChild(globalsjs);
 */
-
+/*
 var toolbarOptions = [
   [{'header': [1, 2, 3, 4, 5, 6, false]}],
   [{'size': ['small', false, 'large', 'huge']}],
@@ -35,6 +35,7 @@ var quill = new Quill('.editor', {
     placeholder: 'Add description',
     theme: 'snow'
 });
+*/
 
 // make all dynamically added buttons work
 $('.section').on('click', '[class^="buttons"]', function() {
@@ -269,13 +270,13 @@ function addNewSection() {
     'placeholder': 'Title'
   }).appendTo(separation);
 
-  // set up toolbar section
+  /* set up toolbar section
   $('<div/>', {
     'class': 'toolbar',
-  }).appendTo(separation);
+  }).appendTo(separation);*/
 
   // set up editor section
-  $('<input/>', {
+  $('<textarea/>', {
     'type': 'text',
     'class': 'editor',
     'name': 'content'+sectionCount,

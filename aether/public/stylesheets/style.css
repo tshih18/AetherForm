@@ -215,6 +215,8 @@ div[class^='sub-buttons'], div[class*=' sub-buttons'] {
 .editor {
   height: 200px;
   width: 100%;
+  resize: none;
+  font-size: 1em;
 }
 
 #plus {
