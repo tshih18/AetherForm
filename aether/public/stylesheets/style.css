@@ -72,20 +72,12 @@
   border-radius: 10px;
 }
 
-.buttons {
+div[class^='buttons'], div[class*=' buttons'] {
   background-color: lightblue;
   border-radius: 10px;
   padding-top: 5px;
   margin: 3px;
 }
-
-/*
-#prints-button {
-  float: right;
-  width: 55px;
-  height: 23px;
-  padding-left: 15px;
-}*/
 
 [id^='problems-button'] {
   float: right;
@@ -108,7 +100,7 @@
   padding-left: 15px;
 }
 
-.sub-buttons {
+div[class^='sub-buttons'], div[class*=' sub-buttons'] {
   background-color: lightblue;
   border-radius: 10px;
   padding-top: 5px;
@@ -116,98 +108,98 @@
   display: none;
 }
 
-#other-problems-button {
+[id^='other-problems-button'] {
   float: right;
   width: 60px;
   height: 23px;
   padding-left: 15px;
 }
 
-#connectivity-problems-button {
+[id^='connectivity-problems-button'] {
   float: right;
   width: 98px;
   height: 23px;
   padding-left: 15px;
 }
 
-#electrical-problems-button {
+[id^='electrical-problems-button'] {
   float: right;
   width: 78px;
   height: 23px;
   padding-left: 15px;
 }
 
-#mechanical-problems-button {
+[id^='mechanical-problems-button'] {
   float: right;
   width: 90px;
   height: 23px;
   padding-left: 15px;
 }
 
-#software-problems-button {
+[id^='software-problems-button'] {
   float: right;
   width: 73px;
   height: 23px;
   padding-left: 15px;
 }
 
-#other-prints-button {
+[id^='other-prints-button'] {
   float: right;
   width: 60px;
   height: 23px;
   padding-left: 15px;
 }
 
-#material-prints-button {
+[id^='material-prints-button'] {
   float: right;
   width: 77px;
   height: 23px;
   padding-left: 15px;
 }
 
-#setting-prints-button {
+[id^='setting-prints-button'] {
   float: right;
   width: 69px;
   height: 23px;
   padding-left: 15px;
 }
 
-#other-suggestion-button {
+[id^='other-suggestion-button'] {
   float: right;
   width: 60px;
   height: 23px;
   padding-left: 15px;
 }
 
-#feature-suggestion-button {
+[id^='feature-suggestion-button'] {
   float: right;
   width: 69px;
   height: 23px;
   padding-left: 15px;
 }
 
-#configuration-suggestion-button {
+[id^='configuration-suggestion-button'] {
   float: right;
   width: 103px;
   height: 23px;
   padding-left: 15px;
 }
 
-#other-question-button {
+[id^='other-question-button'] {
   float: right;
   width: 60px;
   height: 23px;
   padding-left: 15px;
 }
 
-#software-question-button {
+[id^='software-question-button'] {
   float: right;
   width: 73px;
   height: 23px;
   padding-left: 15px;
 }
 
-#printer-question-button {
+[id^='printer-question-button'] {
   float: right;
   width: 60px;
   height: 23px;
@@ -217,7 +209,7 @@
 .title {
   font-size: 1.5em;
   margin: auto;
-  width: 40%;
+  width: 30%;
 }
 
 .editor {

@@ -37,95 +37,97 @@ var quill = new Quill('.editor', {
 });
 
 // make all dynamically added buttons work
-$('.section').on('click', '.buttons', function() {
+$('.section').on('click', '[class^="buttons"]', function() {
+
+  // split id on -
+  var splitID = $(this).attr("id").split('-');
+  var firstID = splitID[0];
+  var size = splitID.length
+  var indexNum = splitID[size-1];
+
   // if button is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+
     // make only one button selectable
-    $('.buttons').css("background-color", "lightblue");
+    $('.buttons-'+indexNum).css("background-color", "lightblue");
     $(this).css("background-color", "gray");
 
-    //console.log($(this).attr("id"));
-
-    // split id on -
-    var splitID = $(this).attr("id").split('-');
-    var firstID = splitID[0];
-    var firstIDNum = splitID[2];
-
-    //if ($(this).attr('id') == "problems-button") {
-    //if ($('[id^=problems-button]')) {
-    if (firstID == "problems") {
-      $('.sub-buttons').css("display", "none");
-      $('.problem-buttons-'+firstIDNum).css("display", "initial");
+    // depending on which button, make only one sub button selectable (gray)
+    if (firstID == "suggestions") {
+      $('.sub-buttons-'+indexNum).css("display", "none");
+      $('.suggestion-buttons-'+indexNum).css("display", "initial");
     }
-    /*else if ($(this).attr('id') == "prints-button") {
-      $('.sub-buttons').css("display", "none");
-      $('.print-buttons').css("display", "initial");
-    }*/
-    //else if ($(this).attr('id') == "suggestions-button") {
-    //else if ($('[id^=suggestions-button]')) {
-    //else if ($(this[id^="suggestions-button"])) {
-    else if (firstID == "suggestions") {
-      $('.sub-buttons').css("display", "none");
-      $('.suggestion-buttons-'+firstIDNum).css("display", "initial");
-    }
-    //else if ($(this).attr('id') == "questions-button") {
-    //else if ($('[id^=questions-button]')) {
-    //else if ($(this[id^='questions-button'])) {
     else if (firstID == "questions") {
-      $('.sub-buttons').css("display", "none");
-      $('.question-buttons-'+firstIDNum).css("display", "initial");
+      $('.sub-buttons-'+indexNum).css("display", "none");
+      $('.question-buttons-'+indexNum).css("display", "initial");
+    }
+    else if (firstID == "problems") {
+      $('.sub-buttons-'+indexNum).css("display", "none");
+      $('.problem-buttons-'+indexNum).css("display", "initial");
     }
   }
   // if button is gray change back to lightblue
   else {
     $(this).css("background-color", "lightblue");
-    $('.sub-buttons').css("display", "none");
+    // remove all sub-buttons pertaining to that section
+    $('.sub-buttons-'+indexNum).css("display", "none");
   }
   // de-select all other sub-buttons
-  $('.sub-buttons').css("background-color", "lightblue");
+  $('.sub-buttons-'+indexNum).css("background-color", "lightblue");
 });
 
-// handle sub-buttons click events -- need to make it dynamicly active
-$('.problem-buttons').click(function() {
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+// handles dynamically added sub suggestion buttons
+$('.section').on('click', '[class^="suggestion-buttons"]', function() {
+  var splitID = $(this).attr("id").split('-');
+  var size = splitID.length;
+  var indexNum = splitID[size-1];
 
-    $('.problem-buttons').css("background-color", "lightblue");
+  // if background is lightblue
+  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+    // make all other sub buttons lightblue
+    $('.suggestion-buttons-'+indexNum).css("background-color", "lightblue");
+    // change that button to gray
     $(this).css("background-color", "gray");
   }
-  else {
-    $(this).css("background-color", "lightblue");
-  }
-})
-/*
-$('.print-buttons').click(function() {
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
-
-    $('.print-buttons').css("background-color", "lightblue");
-    $(this).css("background-color", "gray");
-  }
-  else {
-    $(this).css("background-color", "lightblue");
-
-  }
-})*/
-
-$('.suggestion-buttons').click(function() {
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
-
-    $('.suggestion-buttons').css("background-color", "lightblue");
-    $(this).css("background-color", "gray");
-  }
+  // if background is gray, change back to lightblue
   else {
     $(this).css("background-color", "lightblue");
   }
 })
 
-$('.question-buttons').click(function() {
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+// handles dynamically added sub suggestion buttons
+$('.section').on('click', '[class^="question-buttons"]', function() {
+  var splitID = $(this).attr("id").split('-');
+  var size = splitID.length;
+  var indexNum = splitID[size-1];
 
-    $('.question-buttons').css("background-color", "lightblue");
+  // if background is lightblue
+  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+    // make all other sub buttons lightblue
+    $('.question-buttons-'+indexNum).css("background-color", "lightblue");
+    // change that button to gray
     $(this).css("background-color", "gray");
   }
+  // if background is gray, change back to lightblue
+  else {
+    $(this).css("background-color", "lightblue");
+  }
+})
+
+// handles dynamically added sub problem buttons
+$('.section').on('click', '[class^="problem-buttons"]', function() {
+  var splitID = $(this).attr("id").split('-');
+  var size = splitID.length;
+  var indexNum = splitID[size-1];
+
+  // if background is lightblue
+  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+    / /make all other sub buttons lightblue
+    $('.problem-buttons-'+indexNum).css("background-color", "lightblue");
+    // change that button to gray
+    $(this).css("background-color", "gray");
+  }
+  // if background is gray, change back to lightblue
   else {
     $(this).css("background-color", "lightblue");
   }
@@ -142,45 +144,122 @@ $('#submit').click(function() {
 
 });
 
-//var newSection = '<div class="section"><form action="/insert" method="post"><input type="text" class="title" name="title" placeholder="Title"><div class="toolbar"></div><input type="text" class="editor" name="content"> </form></div>'
 
+// differentiate each section
 var sectionCount = 0;
 
 function addNewSection() {
 
   var separation = document.getElementById("separation" + sectionCount);
-
   // make names for each section unique
   sectionCount++;
 
   // add buttons
   $('<div/>', {
-    'class': 'buttons',
+    'class': 'buttons-'+sectionCount,
     'name': 'suggestions-button-'+sectionCount,
     'id': 'suggestions-button-'+sectionCount,
     'html': 'Suggestions'
   }).appendTo(separation);
 
   $('<div/>', {
-    'class': 'buttons',
+    'class': 'buttons-'+sectionCount,
     'name': 'questions-button-'+sectionCount,
     'id': 'questions-button-'+sectionCount,
     'html': 'Questions'
   }).appendTo(separation);
 
   $('<div/>', {
-    'class': 'buttons',
+    'class': 'buttons-'+sectionCount,
     'name': 'problems-button-'+sectionCount,
     'id': 'problems-button-'+sectionCount,
     'html': 'Problems'
   }).appendTo(separation);
 
+  $('<div/>', {
+    'class': 'break'
+  }).appendTo(separation);
+
   // add sub-buttons
+  // suggestion sub buttons
+  $('<div/>', {
+    'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'other-suggestion-button-'+sectionCount,
+    'id': 'other-suggestion-button-'+sectionCount,
+    'html': 'Others'
+  }).appendTo(separation);
 
+  $('<div/>', {
+    'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'feature-suggestion-button-'+sectionCount,
+    'id': 'feature-suggestion-button-'+sectionCount,
+    'html': 'Features'
+  }).appendTo(separation);
 
+  $('<div/>', {
+    'class': 'suggestion-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'configuration-suggestion-button-'+sectionCount,
+    'id': 'configuration-suggestion-button-'+sectionCount,
+    'html': 'Configuration'
+  }).appendTo(separation);
 
+  // question sub buttons
+  $('<div/>', {
+    'class': 'question-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'other-question-button-'+sectionCount,
+    'id': 'other-question-button-'+sectionCount,
+    'html': 'Others'
+  }).appendTo(separation);
 
+  $('<div/>', {
+    'class': 'question-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'software-question-button-'+sectionCount,
+    'id': 'software-question-button-'+sectionCount,
+    'html': 'Software'
+  }).appendTo(separation);
 
+  $('<div/>', {
+    'class': 'question-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'printer-question-button-'+sectionCount,
+    'id': 'printer-question-button-'+sectionCount,
+    'html': 'Printer'
+  }).appendTo(separation);
+
+  // problem sub buttons
+  $('<div/>', {
+    'class': 'problem-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'other-problems-button-'+sectionCount,
+    'id': 'other-problems-button-'+sectionCount,
+    'html': 'Others'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'problem-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'connectivity-problems-button-'+sectionCount,
+    'id': 'connectivity-problems-button-'+sectionCount,
+    'html': 'Connectivity'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'problem-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'electrical-problems-button-'+sectionCount,
+    'id': 'electrical-problems-button-'+sectionCount,
+    'html': 'Electrical'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'problem-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'mechanical-problems-button-'+sectionCount,
+    'id': 'mechanical-problems-button-'+sectionCount,
+    'html': 'Mechanical'
+  }).appendTo(separation);
+
+  $('<div/>', {
+    'class': 'problem-buttons-'+sectionCount + ' sub-buttons-' +sectionCount,
+    'name': 'software-problems-button-'+sectionCount,
+    'id': 'software-problems-button-'+sectionCount,
+    'html': 'Software'
+  }).appendTo(separation);
 
   // set up input title section
   $('<input/>', {
@@ -195,7 +274,6 @@ function addNewSection() {
     'class': 'toolbar',
   }).appendTo(separation);
 
-
   // set up editor section
   $('<input/>', {
     'type': 'text',
@@ -203,7 +281,6 @@ function addNewSection() {
     'name': 'content'+sectionCount,
     'placeholder': 'Write description'
   }).appendTo(separation);
-
 
   $('<div/>', {
     'id': 'separation'+sectionCount
