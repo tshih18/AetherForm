@@ -122,7 +122,7 @@ $('.section').on('click', '[class^="problem-buttons"]', function() {
 
   // if background is lightblue
   if ($(this).css("background-color") == "rgb(173, 216, 230)") {
-    / /make all other sub buttons lightblue
+    // make all other sub buttons lightblue
     $('.problem-buttons-'+indexNum).css("background-color", "lightblue");
     // change that button to gray
     $(this).css("background-color", "gray");
