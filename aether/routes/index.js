@@ -11,6 +11,12 @@ var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
 
+// parse response body
+var bodyParser = require('body-parser');
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+router.use(bodyParser.json());
 
 // import phantom to render pdf file
 var phantom = require('phantom');
@@ -34,18 +40,14 @@ var jsonURL = "http://localhost:3000/displayJSON.html";
 
 })*/
 
-
-// parse response body
-var bodyParser = require('body-parser')
-// parse application/x-www-form-urlencoded
-router.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-router.use(bodyParser.json())
+var didPushProblems = false;
+var didPushQuestions = false;
+var didPushSuggestions = false;
 
 // upon runinng server
 console.log("server started");
 
-var url = 'mongodb://localhost:27017/users';
+var usersURL = 'mongodb://localhost:27017/users';
 var theoURL = 'mongodb://localhost:27017/Theo';
 
 // open static files in folder
@@ -57,7 +59,7 @@ router.post('/getData', function(request, response) {
   var result = [];
   var name = request.body.collectionName;
 
-  mongo.connect(url, function(error, db) {
+  mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
 
@@ -86,8 +88,12 @@ router.post('/insert', function(request, response) {
   // array of keys
   var dictionaryKeys = Object.keys(dictionaryData);
 
+  // push these items in id collection
   var items = [];
-  var name = dictionaryData[dictionaryKeys[0]];
+  var problems = [];
+  var questions = [];
+  var suggestions = [];
+  var id = dictionaryData[dictionaryKeys[0]];
 
   for (var i = 1; i < dictionarySize; i+=4) {
     var item = {
@@ -100,6 +106,36 @@ router.post('/insert', function(request, response) {
     // print item to insert
     console.log(item);
     items.push(item);
+
+    var tagItem = {
+      user: id,
+      subtag: dictionaryData[dictionaryKeys[i+1]],
+      title: dictionaryData[dictionaryKeys[i+2]],
+      content: dictionaryData[dictionaryKeys[i+3]]
+    };
+    console.log(tagItem);
+
+    // also put in tag collections
+    switch(item.tag) {
+      case "Problems":
+        problems.push(tagItem);
+        console.log("Problems pushed");
+        didPushProblems = true;
+        break;
+      case "Questions":
+        questions.push(tagItem);
+        console.log("Questions pushed");
+        didPushQuestions = true;
+        break;
+      case "Suggestions":
+        suggestions.push(tagItem);
+        console.log("Suggestions pushed");
+        didPushSuggestions = true;
+        break;
+      default:
+        break;
+    }
+
   }
 
   // redirect to home page
@@ -107,18 +143,40 @@ router.post('/insert', function(request, response) {
   console.log("preparing to insert");
 
   // connect to mongo db db
-  mongo.connect(url, function(error, db) {
+  mongo.connect(usersURL, function(error, db) {
     //assert.equal(null, error);
     console.log("connected to database");
     // insert in db
     console.log(db);
 
     // insert under name under users
-    db.collection(name).insert(items, function() {
+    db.collection(id).insert(items, function() {
       assert.equal(null, error);
-      console.log("successfully inserted in " + name);
-      db.close();
+      console.log("successfully inserted in " + id);
     });
+
+    // push in tag collections
+    if (didPushProblems == true) {
+      db.collection("Problems").insert(problems, function() {
+        assert.equal(null, error);
+        console.log("Successfully inserted in Problems");
+      });
+    }
+    if (didPushQuestions == true) {
+      db.collection("Questions").insert(questions, function() {
+        assert.equal(null, error);
+        console.log("Successfully inserted in Questions");
+      });
+    }
+    if (didPushSuggestions == true) {
+      db.collection("Suggestions").insert(suggestions, function() {
+        assert.equal(null, error);
+        console.log("Successfully inserted in Suggestions");
+      });
+    }
+    db.close();
+
+
   });
 
 });
@@ -133,7 +191,7 @@ router.post('/deleteData', function(request, response) {
   var id = request.body.id;
   response.redirect('/');
 
-  mongo.connect(url, function(error, db) {
+  mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
     db.collection(name).deleteOne({"_id": objectID(id)}, function (error, result) {
       assert.equal(null, error);
