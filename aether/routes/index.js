@@ -10,6 +10,7 @@ var mongo = require('mongodb').MongoClient;
 var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
+var mongoose = require('mongoose');
 
 // parse response body
 var bodyParser = require('body-parser');
@@ -48,10 +49,108 @@ var didPushSuggestions = false;
 console.log("server started");
 
 var usersURL = 'mongodb://localhost:27017/users';
-var theoURL = 'mongodb://localhost:27017/Theo';
 
-// open static files in folder
+// open all static files in folder
 router.use(express.static('views'));
+
+
+/* GET home page.
+router.get('/', function(req, res, next) {
+  res.render('index');
+});*/
+
+// when login pressed, redirect to form page
+router.post('/login', function(request, response, next) {
+  console.log(request.body);
+  var username = request.body.username;
+  var password = request.body.password;
+
+  console.log("Preparing to check for user in database");
+  mongo.connect(usersURL, function(error, db) {
+    assert.equal(null, error);
+    console.log("Connected to database");
+
+    var userInfo = {
+      username: username,
+      password: password
+    };
+
+    db.collection("AuthUsers").findOne(userInfo, function(error, user) {
+      assert.equal(null, error);
+      console.log("USER: " + user);
+      if (!user) {
+        console.log("No user found");
+        response.redirect('/');
+      }
+      else {
+        console.log("User found");
+        // save user in session
+        request.session.user = user;
+        response.redirect('/form');
+      }
+      db.close();
+    });
+  });
+})
+
+router.get('/form', function(request, response) {
+
+  if (!request.session.user) {
+    console.log("User hasent been 'authenticated'")
+    response.redirect('/');
+  }
+  else {
+    console.log("User already authenticated");
+    response.render('form');
+  }
+
+});
+
+// when register is pressed, redirect back to login(index)
+router.post('/register', function(request, response, next) {
+  console.log(request.body);
+  /*
+  var newUser = new User();
+  newUser.username = request.body.username;
+  newUser.email = request.body.email;
+  newUser.password = request.body.password;*/
+  var username = request.body.username;
+  var email = request.body.email;
+  var password = request.body.password;
+  var confirmPassword = request.body.confirmPassword;
+
+  // if passwords dont match, go back
+  if (confirmPassword != password) {
+    //response.status(500).send();
+    console.log("Passwords need to match");
+    response.redirect('/');
+  }
+  else {
+    var User = {
+      username: username,
+      email: email,
+      password: password
+    };
+    console.log("Preparing to insert user into database");
+    // add to database
+    mongo.connect(usersURL, function(error, db) {
+      assert.equal(null, error);
+      console.log("connected to database");
+
+      // insert under name under users
+      db.collection("AuthUsers").insert(User, function() {
+        assert.equal(null, error);
+        console.log("successfully inserted " + User.username);
+        db.close();
+      });
+
+    })
+
+  }
+
+  response.redirect('/');
+});
+
 
 // get data from database
 // use post because we want to get the specific collection name to show
@@ -94,6 +193,8 @@ router.post('/insert', function(request, response) {
   var questions = [];
   var suggestions = [];
   var id = dictionaryData[dictionaryKeys[0]];
+
+
 
   for (var i = 1; i < dictionarySize; i+=4) {
     var item = {
@@ -139,14 +240,13 @@ router.post('/insert', function(request, response) {
   }
 
   // redirect to home page
-  response.redirect('/');
+  response.redirect('/form');
   console.log("preparing to insert");
 
   // connect to mongo db db
   mongo.connect(usersURL, function(error, db) {
-    //assert.equal(null, error);
+    assert.equal(null, error);
     console.log("connected to database");
-    // insert in db
     console.log(db);
 
     // insert under name under users
@@ -204,9 +304,6 @@ router.post('/deleteData', function(request, response) {
 
 
 
-/* GET home page. */
-/*router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});*/
+
 
 module.exports = router;
