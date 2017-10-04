@@ -38,8 +38,7 @@ var quill = new Quill('.editor', {
 */
 
 // make all dynamically added buttons work
-$('.section').on('click', '[class^="buttons"]', function() {
-
+$('[class^="section"]').on('click', '[class^="buttons"]', function() {
   // split id on -
   var splitID = $(this).attr("id").split('-');
   var firstID = splitID[0];
@@ -52,7 +51,6 @@ $('.section').on('click', '[class^="buttons"]', function() {
     // set value of input main button equal to the text of button pressed
     var mainButtonVal = $(this).text();
     $('#tag-'+indexNum).val(mainButtonVal);
-    console.log($('#tag-'+indexNum).val());
 
     // make only one button selectable
     $('.buttons-'+indexNum).css("background-color", "lightblue");
@@ -76,7 +74,6 @@ $('.section').on('click', '[class^="buttons"]', function() {
   else {
     // when de-selected remove value from input main button
     $('#tag-'+indexNum).val("");
-    console.log($('#tag-'+indexNum).val());
 
     $(this).css("background-color", "lightblue");
     // remove all sub-buttons pertaining to that section
@@ -87,7 +84,7 @@ $('.section').on('click', '[class^="buttons"]', function() {
 });
 
 // handles dynamically added sub suggestion buttons
-$('.section').on('click', '[class^="suggestion-buttons"]', function() {
+$('[class^="section"]').on('click', '[class^="suggestion-buttons"]', function() {
   var splitID = $(this).attr("id").split('-');
   var size = splitID.length;
   var indexNum = splitID[size-1];
@@ -98,7 +95,6 @@ $('.section').on('click', '[class^="suggestion-buttons"]', function() {
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
-    console.log($('#sub-tag-'+indexNum).val());
 
 
     // make all other sub buttons lightblue
@@ -115,7 +111,7 @@ $('.section').on('click', '[class^="suggestion-buttons"]', function() {
 })
 
 // handles dynamically added sub suggestion buttons
-$('.section').on('click', '[class^="question-buttons"]', function() {
+$('[class^="section"]').on('click', '[class^="question-buttons"]', function() {
   var splitID = $(this).attr("id").split('-');
   var size = splitID.length;
   var indexNum = splitID[size-1];
@@ -126,7 +122,6 @@ $('.section').on('click', '[class^="question-buttons"]', function() {
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
-    console.log($('#sub-tag-'+indexNum).val());
 
     // make all other sub buttons lightblue
     $('.question-buttons-'+indexNum).css("background-color", "lightblue");
@@ -142,7 +137,7 @@ $('.section').on('click', '[class^="question-buttons"]', function() {
 })
 
 // handles dynamically added sub problem buttons
-$('.section').on('click', '[class^="problem-buttons"]', function() {
+$('[class^="section"]').on('click', '[class^="problem-buttons"]', function() {
   var splitID = $(this).attr("id").split('-');
   var size = splitID.length;
   var indexNum = splitID[size-1];
@@ -153,7 +148,6 @@ $('.section').on('click', '[class^="problem-buttons"]', function() {
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
-    console.log($('#sub-tag-'+indexNum).val());
 
     // make all other sub buttons lightblue
     $('.problem-buttons-'+indexNum).css("background-color", "lightblue");
@@ -184,8 +178,6 @@ $('#submit').click(function() {
 var sectionCount = 0;
 
 function addNewSection() {
-
-  //var separation = document.getElementById("separation" + sectionCount);
   var separation = $('#separation' + sectionCount);
   // make names for each section unique
   sectionCount++;
@@ -340,6 +332,7 @@ function addNewSection() {
     'placeholder': 'Write description'
   }).appendTo(separation);
 
+
   $('<div/>', {
     'id': 'separation'+sectionCount
   }).appendTo(separation);
@@ -378,7 +371,7 @@ function deleteSection(numSection) {
 
 }
 
-$('.section').on('click', '[id^="closeImg"]', function() {
+$('[class^="section"]').on('click', '[id^="closeImg"]', function() {
   var splitID = $(this).attr("id").split('-');
   var numSection = splitID[1];
   deleteSection(numSection);

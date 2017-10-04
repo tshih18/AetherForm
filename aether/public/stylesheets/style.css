@@ -34,7 +34,7 @@
 }
 
 .break{
-    clear: both;
+  clear: both;
 }
 
 #site-title {
@@ -210,13 +210,22 @@ div[class^='sub-buttons'], div[class*=' sub-buttons'] {
   font-size: 1.5em;
   margin: auto;
   width: 30%;
+  border: 1px solid black;
+  margin-bottom: 5px;
 }
 
 .editor {
   height: 200px;
-  width: 100%;
+  width: 99%;
   resize: none;
   font-size: 1em;
+  border: 1px solid black;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: black;
 }
 
 [id^='closeImg'] {
@@ -259,6 +268,21 @@ div[class^='sub-buttons'], div[class*=' sub-buttons'] {
 
 #plus:hover {
   background-color: gray;
+}
+
+#saveButton {
+  text-align: center;
+  margin-top: 30px;
+
+}
+
+#submit {
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+  background-color: white;
 }
 
 a {

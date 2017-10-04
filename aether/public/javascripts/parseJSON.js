@@ -1,5 +1,5 @@
 // filling out json data in webpage
-$.getJSON("filledData.json", function(data) {
+$.getJSON("filledData", function(data) {
 
   // set document version value
   $('#docver-val').val(data.DocumentVersion);
