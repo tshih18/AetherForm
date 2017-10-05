@@ -11,6 +11,7 @@ var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 
 // parse response body
 var bodyParser = require('body-parser');
@@ -41,6 +42,8 @@ var jsonURL = "http://localhost:3000/displayJSON.html";
 
 })*/
 
+var User = require('../model/User');
+
 var didPushProblems = false;
 var didPushQuestions = false;
 var didPushSuggestions = false;
@@ -59,6 +62,92 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });*/
 
+// when register is pressed, redirect back to login(index)
+router.post('/register', function(request, response, next) {
+
+
+  var username = request.body.username;
+  var email = request.body.email;
+  var password = request.body.password;
+  var confirmPassword = request.body.confirmPassword;
+  var key = request.body.key;
+
+  //mongoose
+  /*var newUser = new User();
+  newUser.username = username;
+  newUser.email = email;
+  newUser.password = password;
+  newUser.key = key;*/
+
+  var User = {
+    username: username,
+    email: email,
+    password: password,
+    key: key
+  };
+  console.log(User);
+
+  var passed = true;
+
+  // check password - if passwords dont match - error
+  if (confirmPassword != password) {
+    console.log("Passwords need to match");
+    passed = false;
+  }
+  // check key - if key not found - error
+  mongo.connect(usersURL, function(error, db) {
+    assert.equal(null, error);
+    console.log("Preparing to check key");
+
+    // check if key exists in database
+    db.collection("Keys").findOne({key: key}, function(error, key) {
+      assert.equal(null, error);
+      console.log("Connected to Keys collection");
+
+      // if no matching key was found - error
+      if (!key) {
+        console.log("Invalid key");
+        passed = false;
+      }
+      db.close();
+    });//db.collection("Keys")
+  });//mongo.connect
+
+  // check username - if username already exists - error
+  // add user in AuthUsers if test all passed
+  mongo.connect(usersURL, function(error, db) {
+    assert.equal(null, error);
+    console.log("Preparing to check username");
+
+    db.collection("AuthUsers").findOne({username: username}, function(error, username) {
+      assert.equal(null, error);
+
+      if (username) {
+        console.log("Username taken");
+        passed = false;
+      }
+
+      // if all tests pass then insert user into AuthUsers
+      if (passed) {
+        /*newUser.save(function(error, savedUser) { //mongoose
+          assert.equal(null, error);
+          console.log("Successfully inserted " + newUser.username);
+          db.close();
+        });*/
+        db.collection("AuthUsers").insert(User, function() {
+          assert.equal(null, error);
+          console.log("Successfully inserted " + User.username);
+          db.close();
+        });
+      }
+
+    });//db.collection("AuthUsers")
+
+  });//mongo.connect
+
+  response.redirect('/');
+});
+
 // when login pressed, redirect to form page
 router.post('/login', function(request, response, next) {
   console.log(request.body);
@@ -71,8 +160,8 @@ router.post('/login', function(request, response, next) {
     console.log("Connected to database");
 
     var userInfo = {
-      username: username,
-      password: password
+      username: username//,
+      //password: password
     };
 
     db.collection("AuthUsers").findOne(userInfo, function(error, user) {
@@ -91,10 +180,15 @@ router.post('/login', function(request, response, next) {
       db.close();
     });
   });
-})
+});
+
+
+router.get('/logout', function(request, response) {
+  request.session.destroy();
+  response.redirect('/');
+});
 
 router.get('/form', function(request, response) {
-
   if (!request.session.user) {
     console.log("User hasent been 'authenticated'")
     response.redirect('/');
@@ -103,52 +197,6 @@ router.get('/form', function(request, response) {
     console.log("User already authenticated");
     response.render('form');
   }
-
-});
-
-// when register is pressed, redirect back to login(index)
-router.post('/register', function(request, response, next) {
-  console.log(request.body);
-  /*
-  var newUser = new User();
-  newUser.username = request.body.username;
-  newUser.email = request.body.email;
-  newUser.password = request.body.password;*/
-  var username = request.body.username;
-  var email = request.body.email;
-  var password = request.body.password;
-  var confirmPassword = request.body.confirmPassword;
-
-  // if passwords dont match, go back
-  if (confirmPassword != password) {
-    //response.status(500).send();
-    console.log("Passwords need to match");
-    response.redirect('/');
-  }
-  else {
-    var User = {
-      username: username,
-      email: email,
-      password: password
-    };
-    console.log("Preparing to insert user into database");
-    // add to database
-    mongo.connect(usersURL, function(error, db) {
-      assert.equal(null, error);
-      console.log("connected to database");
-
-      // insert under name under users
-      db.collection("AuthUsers").insert(User, function() {
-        assert.equal(null, error);
-        console.log("successfully inserted " + User.username);
-        db.close();
-      });
-
-    })
-
-  }
-
-  response.redirect('/');
 });
 
 
@@ -239,7 +287,6 @@ router.post('/insert', function(request, response) {
 
   }
 
-  // redirect to home page
   response.redirect('/form');
   console.log("preparing to insert");
 
@@ -289,7 +336,7 @@ router.post('/deleteData', function(request, response) {
 
   // get id to be deleted
   var id = request.body.id;
-  response.redirect('/');
+
 
   mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
@@ -299,6 +346,8 @@ router.post('/deleteData', function(request, response) {
       db.close();
     })
   });
+
+  response.redirect('/form');
 
 });
 
