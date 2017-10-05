@@ -6,11 +6,17 @@ var router = express.Router();
 var fs = require('fs');
 // import mongodb
 var mongo = require('mongodb').MongoClient;
+// import mongoose
+var mongoose = require('mongoose');
+
 // get object ID
 var objectID = require('mongodb').ObjectID;
 // used for testing
 var assert = require('assert');
-var mongoose = require('mongoose');
+
+
+
+
 var bcrypt = require('bcrypt');
 
 // parse response body
@@ -53,9 +59,12 @@ console.log("server started");
 
 var usersURL = 'mongodb://localhost:27017/users';
 
+// connect with mongoose
+mongoose.Promise = global.Promise;
+mongoose.connect(usersURL);
+
 // open all static files in folder
 router.use(express.static('views'));
-
 
 /* GET home page.
 router.get('/', function(req, res, next) {
@@ -65,7 +74,6 @@ router.get('/', function(req, res, next) {
 // when register is pressed, redirect back to login(index)
 router.post('/register', function(request, response, next) {
 
-
   var username = request.body.username;
   var email = request.body.email;
   var password = request.body.password;
@@ -73,19 +81,19 @@ router.post('/register', function(request, response, next) {
   var key = request.body.key;
 
   //mongoose
-  /*var newUser = new User();
+  var newUser = new User();
   newUser.username = username;
   newUser.email = email;
   newUser.password = password;
-  newUser.key = key;*/
-
-  var User = {
+  newUser.key = key;
+  console.log(newUser);
+  /*var User = {
     username: username,
     email: email,
     password: password,
     key: key
   };
-  console.log(User);
+  console.log(User);*/
 
   var passed = true;
 
@@ -119,7 +127,7 @@ router.post('/register', function(request, response, next) {
     assert.equal(null, error);
     console.log("Preparing to check username");
 
-    db.collection("AuthUsers").findOne({username: username}, function(error, username) {
+    db.collection("authusers").findOne({username: username}, function(error, username) {
       assert.equal(null, error);
 
       if (username) {
@@ -127,23 +135,33 @@ router.post('/register', function(request, response, next) {
         passed = false;
       }
 
-      // if all tests pass then insert user into AuthUsers
+      if (passed) {
+        newUser.save(function(error, savedUser) { //mongoose
+          assert.equal(null, error);
+          console.log("Successfully inserted " + newUser.username);
+          db.close();
+        });
+      }
+
+      /* if all tests pass then insert user into AuthUsers
       if (passed) {
         /*newUser.save(function(error, savedUser) { //mongoose
           assert.equal(null, error);
           console.log("Successfully inserted " + newUser.username);
           db.close();
         });*/
-        db.collection("AuthUsers").insert(User, function() {
+        /*db.collection("AuthUsers").insert(User, function() {
           assert.equal(null, error);
           console.log("Successfully inserted " + User.username);
           db.close();
         });
-      }
+      }*/
 
     });//db.collection("AuthUsers")
 
   });//mongo.connect
+
+
 
   response.redirect('/');
 });
@@ -164,9 +182,8 @@ router.post('/login', function(request, response, next) {
       //password: password
     };
 
-    db.collection("AuthUsers").findOne(userInfo, function(error, user) {
+    db.collection("authusers").findOne(userInfo, function(error, user) {
       assert.equal(null, error);
-      console.log("USER: " + user);
       if (!user) {
         console.log("No user found");
         response.redirect('/');
@@ -329,7 +346,7 @@ router.post('/insert', function(request, response) {
 });
 
 // delete data from database
-router.post('/deleteData', function(request, response) {
+router.delete('/deleteData', function(request, response) {
 
   // get collection name to delete from
   var name = request.body.collectionName;

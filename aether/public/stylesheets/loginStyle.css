@@ -1,23 +1,129 @@
-#container {
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Microsoft YaHei,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.bg {
+  /* The image used */
+  /*background-image: url(/images/aetherBackground.jpg);*/
+  background-image: url(http://bioprinting.aether1.com/wp-content/uploads/2016/08/Bioprinter-3D-Bioprinting-cost-price-for-sale.jpg);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 50px;
+}
+
+#aether-title {
+  float: left;
   text-align: center;
+  position: relative;
+  left: 30px;
+  width: 200px;
+}
+
+#site-link {
+  color: white;
+  text-decoration: none;
+}
+
+#top-border {
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+#bot-border {
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+#viewarea {
+  margin: auto;
+  /*
+  border: 1px solid black;
+  border-radius: 10px;
+  */
+  width: 400px;
+  padding: 20px;
+}
+
+#login-button {
+  margin-left: 100px;
+}
+
+.button {
+
+  height: 30px;
+  width: 100px;
+  margin: 0 auto;
+  padding-top: 5px;
+  text-align: center;
+  font-size: 1.3em;
+  color: white;
+  background-color: rgb(69, 196, 191);
+  float: left;
+  margin-bottom: 10px;
+}
+
+#login-button {
+  background-color: gray;
+}
+
+.break {
+  clear: both;
+}
+
+#textarea {
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 0 auto;
+  text-align: center;
+  height: 350px;
+  background-color: rgb(247, 247, 247);
+}
+
+.label {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #login {
-  border: 1px solid black;
-  border-radius: 10px;
+  text-align: center;
   margin-bottom: 30px;
   padding-bottom: 30px;
+
 }
 
 #register {
-  border: 1px solid black;
-  border-radius: 10px;
+  text-align: center;
   margin-bottom: 30px;
   padding-bottom: 30px;
-
+  display: none;
 }
 
 input {
   margin: 10px;
-  width: 30%;
+}
+
+.submit {
+  width: 140px;
+  height: 30px;
+  color: white;
+  background-color: rgb(69, 196, 191);
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.3em;
+  margin-top: 10px;
 }

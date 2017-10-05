@@ -1,9 +1,20 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Microsoft YaHei,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
 #container {
-  font: "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: "Lucida Grande", Helvetica, Arial, sans-serif;*/
   /*background-image: url(https://pixnio.com/free-images/2017/09/10/2017-09-10-18-15-08.jpg);*/
-  background-image: url(/images/aetherBackground.jpg);
+  /*background-image: url(/images/aetherBackground.jpg);*/
+  background-image: url(http://bioprinting.aether1.com/wp-content/uploads/2016/08/Bioprinter-3D-Bioprinting-cost-price-for-sale.jpg);
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 #aether-title {
@@ -64,7 +75,7 @@
 }
 
 div[class^='section'], div[class*=' section'] {
-  background-color: white;
+  background-color: rgb(247, 247, 247);
   padding: 10px;
   padding-bottom: 20px;
   width: 90%;
@@ -73,7 +84,8 @@ div[class^='section'], div[class*=' section'] {
 }
 
 div[class^='buttons'], div[class*=' buttons'] {
-  background-color: lightblue;
+  color: white;
+  background-color: rgb(69, 196, 191);
   border-radius: 10px;
   padding-top: 5px;
   margin: 3px;
@@ -81,129 +93,99 @@ div[class^='buttons'], div[class*=' buttons'] {
 
 [id^='problems-button'] {
   float: right;
-  width: 77px;
+  width: 90px;
   height: 23px;
-  padding-left: 15px;
+  text-align: center;
 }
 
 [id^='questions-button'] {
   float: right;
-  width: 80px;
+  width: 98px;
   height: 23px;
-  padding-left: 15px;
+  text-align: center;
 }
 
 [id^='suggestions-button'] {
   float: right;
-  width: 93px;
+  width: 110px;
   height: 23px;
-  padding-left: 15px;
+  text-align: center;
 }
 
 div[class^='sub-buttons'], div[class*=' sub-buttons'] {
-  background-color: lightblue;
+  background-color: rgb(69, 196, 191);
+  color: white;
   border-radius: 10px;
   padding-top: 5px;
   margin: 3px;
+  text-align: center;
   display: none;
 }
 
 [id^='other-problems-button'] {
   float: right;
-  width: 60px;
+  width: 70px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='connectivity-problems-button'] {
   float: right;
-  width: 98px;
+  width: 110px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='electrical-problems-button'] {
   float: right;
-  width: 78px;
+  width: 90px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='mechanical-problems-button'] {
   float: right;
-  width: 90px;
+  width: 106px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='software-problems-button'] {
   float: right;
-  width: 73px;
+  width: 90px;
   height: 23px;
-  padding-left: 15px;
-}
-
-[id^='other-prints-button'] {
-  float: right;
-  width: 60px;
-  height: 23px;
-  padding-left: 15px;
-}
-
-[id^='material-prints-button'] {
-  float: right;
-  width: 77px;
-  height: 23px;
-  padding-left: 15px;
-}
-
-[id^='setting-prints-button'] {
-  float: right;
-  width: 69px;
-  height: 23px;
-  padding-left: 15px;
 }
 
 [id^='other-suggestion-button'] {
   float: right;
-  width: 60px;
+  width: 72px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='feature-suggestion-button'] {
   float: right;
-  width: 69px;
+  width: 84px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='configuration-suggestion-button'] {
   float: right;
-  width: 103px;
+  width: 120px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='other-question-button'] {
   float: right;
-  width: 60px;
+  width: 76px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='software-question-button'] {
   float: right;
-  width: 73px;
+  width: 90px;
   height: 23px;
-  padding-left: 15px;
 }
 
 [id^='printer-question-button'] {
   float: right;
-  width: 60px;
+  width: 76px;
   height: 23px;
-  padding-left: 15px;
 }
 
 .title {
@@ -282,7 +264,8 @@ div[class^='sub-buttons'], div[class*=' sub-buttons'] {
   border-radius: 10px;
   border: none;
   font-size: 1em;
-  background-color: white;
+  background-color: rgb(69, 196, 191);
+  color: white;
 }
 
 a {

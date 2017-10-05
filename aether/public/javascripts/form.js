@@ -46,14 +46,14 @@ $('[class^="section"]').on('click', '[class^="buttons"]', function() {
   var indexNum = splitID[size-1];
 
   // if button is lightblue
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+  if ($(this).css("background-color") == "rgb(69, 196, 191)") {
 
     // set value of input main button equal to the text of button pressed
     var mainButtonVal = $(this).text();
     $('#tag-'+indexNum).val(mainButtonVal);
 
     // make only one button selectable
-    $('.buttons-'+indexNum).css("background-color", "lightblue");
+    $('.buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
     $(this).css("background-color", "gray");
 
     // depending on which button, make only one sub button selectable (gray)
@@ -75,12 +75,12 @@ $('[class^="section"]').on('click', '[class^="buttons"]', function() {
     // when de-selected remove value from input main button
     $('#tag-'+indexNum).val("");
 
-    $(this).css("background-color", "lightblue");
+    $(this).css("background-color", "rgb(69, 196, 191)");
     // remove all sub-buttons pertaining to that section
     $('.sub-buttons-'+indexNum).css("display", "none");
   }
   // de-select all other sub-buttons
-  $('.sub-buttons-'+indexNum).css("background-color", "lightblue");
+  $('.sub-buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
 });
 
 // handles dynamically added sub suggestion buttons
@@ -90,7 +90,7 @@ $('[class^="section"]').on('click', '[class^="suggestion-buttons"]', function() 
   var indexNum = splitID[size-1];
 
   // if background is lightblue
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+  if ($(this).css("background-color") == "rgb(69, 196, 191)") {
 
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
@@ -98,7 +98,7 @@ $('[class^="section"]').on('click', '[class^="suggestion-buttons"]', function() 
 
 
     // make all other sub buttons lightblue
-    $('.suggestion-buttons-'+indexNum).css("background-color", "lightblue");
+    $('.suggestion-buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
     // change that button to gray
     $(this).css("background-color", "gray");
   }
@@ -106,7 +106,7 @@ $('[class^="section"]').on('click', '[class^="suggestion-buttons"]', function() 
   else {
     // when de-selected remove value from input sub button
     $('#sub-tag-'+indexNum).val("");
-    $(this).css("background-color", "lightblue");
+    $(this).css("background-color", "rgb(69, 196, 191)");
   }
 })
 
@@ -117,14 +117,14 @@ $('[class^="section"]').on('click', '[class^="question-buttons"]', function() {
   var indexNum = splitID[size-1];
 
   // if background is lightblue
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+  if ($(this).css("background-color") == "rgb(69, 196, 191)") {
 
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
 
     // make all other sub buttons lightblue
-    $('.question-buttons-'+indexNum).css("background-color", "lightblue");
+    $('.question-buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
     // change that button to gray
     $(this).css("background-color", "gray");
   }
@@ -132,7 +132,7 @@ $('[class^="section"]').on('click', '[class^="question-buttons"]', function() {
   else {
     // when de-selected remove value from input sub button
     $('#sub-tag-'+indexNum).val("");
-    $(this).css("background-color", "lightblue");
+    $(this).css("background-color", "rgb(69, 196, 191)");
   }
 })
 
@@ -143,14 +143,14 @@ $('[class^="section"]').on('click', '[class^="problem-buttons"]', function() {
   var indexNum = splitID[size-1];
 
   // if background is lightblue
-  if ($(this).css("background-color") == "rgb(173, 216, 230)") {
+  if ($(this).css("background-color") == "rgb(69, 196, 191)") {
 
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
 
     // make all other sub buttons lightblue
-    $('.problem-buttons-'+indexNum).css("background-color", "lightblue");
+    $('.problem-buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
     // change that button to gray
     $(this).css("background-color", "gray");
   }
@@ -158,7 +158,7 @@ $('[class^="section"]').on('click', '[class^="problem-buttons"]', function() {
   else {
     // when de-selected remove value from input sub button
     $('#sub-tag-'+indexNum).val("");
-    $(this).css("background-color", "lightblue");
+    $(this).css("background-color", "rgb(69, 196, 191)");
   }
 })
 

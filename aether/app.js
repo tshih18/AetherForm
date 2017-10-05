@@ -7,9 +7,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// require these files
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+// express is web application framework to build web APIs
 var app = express();
 
 // view engine setup
@@ -28,7 +30,7 @@ app.use(cookieParser());
 app.use(session({secret:"asdfasdfasdf", resave:false, saveUninitialized:true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routes to use
+// routes to use these files
 app.use('/', index);
 app.use('/users', users);
 
