@@ -41,6 +41,7 @@
       <div class="break"></div>
 
       <div id="textarea">
+        <!-- Login Form -->
         <form id="login" action="/login" method="post">
           <div class="label">Login</div>
           <input type="text" name="username" placeholder="Username"><br>
@@ -48,13 +49,49 @@
           <button type="submit" class="submit">Submit</button>
         </form>
 
-        <form id="register" action="/register" method="post">
+        <!-- Register Form -->
+        <form id="register" name="register" action="/register" method="post">
           <div class="label">Register</div>
-          <input type="text" name="username" placeholder="Username"><br>
-          <input type="text" name="email" placeholder="Email"><br>
-          <input type="text" name="key" placeholder="Key"><br>
-          <input type="text" name="password" placeholder="Password"><br>
-          <input type="text" name="confirmPassword" placeholder="Confirm Password"><br>
+          <div id="field-username">
+            <div class="error"></div>
+            <input type="text" id="username" name="username" placeholder="Username">
+            <img id="check" src="/images/check.png">
+            <img id="cross" src="/images/cross.png">
+            <br>
+          </div>
+
+          <div id="field-email">
+            <div class="error"></div>
+            <input type="text" id="email" name="email" placeholder="Email">
+            <img id="check" src="/images/check.png">
+            <img id="cross" src="/images/cross.png">
+            <br>
+          </div>
+
+          <div id="field-key">
+            <div class="error"></div>
+            <input type="text" id="key" name="key" placeholder="Key">
+            <img id="check" src="/images/check.png">
+            <img id="cross" src="/images/cross.png">
+            <br>
+          </div>
+
+          <div id="field-password">
+            <div class="error"></div>
+            <input type="text" id="password" name="password" placeholder="Password">
+            <img id="check" src="/images/check.png">
+            <img id="cross" src="/images/cross.png">
+            <br>
+          </div>
+
+          <div id="field-confirmPassword">
+            <div class="error"></div>
+            <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+            <img id="check" src="/images/check.png">
+            <img id="cross" src="/images/cross.png">
+            <br>
+          </div>
+
           <button type="submit" class="submit">Submit</button>
         </form>
       </div>

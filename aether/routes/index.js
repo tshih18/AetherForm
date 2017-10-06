@@ -70,6 +70,12 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });*/
 
+router.get('/register', function(request, response, next) {
+  var name = "HI";
+  //res.render(__dirname + "/views/index.html", {name:name});
+  response.render('index', {name: name});
+});
+
 // when register is pressed, redirect back to login(index)
 router.post('/register', function(request, response, next) {
 
@@ -78,6 +84,8 @@ router.post('/register', function(request, response, next) {
   var password = request.body.password;
   var confirmPassword = request.body.confirmPassword;
   var key = request.body.key;
+
+  var errorMessage = "";
 
   //mongoose
   var newUser = new User();
@@ -89,11 +97,24 @@ router.post('/register', function(request, response, next) {
 
   var passed = true;
 
-  // check password - if passwords dont match - error
-  if (confirmPassword != password) {
-    console.log("Passwords need to match");
-    passed = false;
-  }
+  // check email - if email exists - error
+  mongo.connect(usersURL, function(error, db) {
+    assert.equal(null, error);
+    console.log("Preparing to check email");
+
+    db.collection("authusers").findOne({email: email}, function(error, email) {
+      assert.equal(null, error);
+
+      // if matching email was found - error
+      if (email) {
+        console.log("Email taken");
+        errorMessage += "Email taken"
+        passed = false;
+      }
+      db.close();
+    });//db.collection("authusers")
+  });//mongo.connect
+
   // check key - if key not found - error
   mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
@@ -102,7 +123,6 @@ router.post('/register', function(request, response, next) {
     // check if key exists in database
     db.collection("Keys").findOne({key: key}, function(error, key) {
       assert.equal(null, error);
-      console.log("Connected to Keys collection");
 
       // if no matching key was found - error
       if (!key) {
@@ -135,24 +155,11 @@ router.post('/register', function(request, response, next) {
         });
       }
 
-      /* if all tests pass then insert user into AuthUsers
-      if (passed) {
-        /*newUser.save(function(error, savedUser) { //mongoose
-          assert.equal(null, error);
-          console.log("Successfully inserted " + newUser.username);
-          db.close();
-        });*/
-        /*db.collection("AuthUsers").insert(User, function() {
-          assert.equal(null, error);
-          console.log("Successfully inserted " + User.username);
-          db.close();
-        });
-      }*/
-
     });//db.collection("AuthUsers")
 
   });//mongo.connect
 
+  //response.redirect('/');
   response.redirect('/');
 });
 
@@ -162,14 +169,43 @@ router.post('/login', function(request, response, next) {
   var username = request.body.username;
   var password = request.body.password;
 
+  var userInfo = {
+    username: username
+  };
+
   console.log("Preparing to check for user in database");
+
+  User.findOne(userInfo, function(error, user) {
+    assert.equal(null, error);
+
+    if (!user) {
+      console.log("No user found");
+      response.redirect('/');
+    }
+    else {
+      user.comparePassword(password, function(err, isMatch) {
+        if (isMatch && isMatch == true) {
+          console.log("User found");
+          // save user in session
+          request.session.user = user;
+          response.redirect('/form');
+        }
+        else {
+          console.log("Incorrect password");
+          response.redirect('/');
+        }
+      });
+    }
+
+  });
+
+
+  /*
   mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
     console.log("Connected to database");
 
-    var userInfo = {
-      username: username
-    };
+
 
     db.collection("authusers").findOne(userInfo, function(error, user) {
       assert.equal(null, error);
@@ -184,8 +220,8 @@ router.post('/login', function(request, response, next) {
         response.redirect('/form');
       }
       db.close();
-    });
-  });
+    });//db.collection("authusers")
+  });//mongo.connect()*/
 });
 
 
