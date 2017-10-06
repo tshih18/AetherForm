@@ -45,7 +45,6 @@ var jsonURL = "http://localhost:3000/displayJSON.html";
           });
       });
   });
-
 })*/
 
 var User = require('../model/User');
@@ -87,13 +86,6 @@ router.post('/register', function(request, response, next) {
   newUser.password = password;
   newUser.key = key;
   console.log(newUser);
-  /*var User = {
-    username: username,
-    email: email,
-    password: password,
-    key: key
-  };
-  console.log(User);*/
 
   var passed = true;
 
@@ -161,8 +153,6 @@ router.post('/register', function(request, response, next) {
 
   });//mongo.connect
 
-
-
   response.redirect('/');
 });
 
@@ -178,8 +168,7 @@ router.post('/login', function(request, response, next) {
     console.log("Connected to database");
 
     var userInfo = {
-      username: username//,
-      //password: password
+      username: username
     };
 
     db.collection("authusers").findOne(userInfo, function(error, user) {
@@ -207,7 +196,7 @@ router.get('/logout', function(request, response) {
 
 router.get('/form', function(request, response) {
   if (!request.session.user) {
-    console.log("User hasent been 'authenticated'")
+    console.log("User hasent been authenticated")
     response.redirect('/');
   }
   else {
@@ -240,7 +229,6 @@ router.post('/getData', function(request, response) {
 
 // insert data into database
 router.post('/insert', function(request, response) {
-
   console.log(request.body);
 
   // save every section in database
@@ -257,11 +245,12 @@ router.post('/insert', function(request, response) {
   var problems = [];
   var questions = [];
   var suggestions = [];
-  var id = dictionaryData[dictionaryKeys[0]];
+  // will be the username to store collection
+  //var id = dictionaryData[dictionaryKeys[0]];
+  var username = request.session.user.username;
 
 
-
-  for (var i = 1; i < dictionarySize; i+=4) {
+  for (var i = 0; i < dictionarySize; i+=4) {
     var item = {
       tag: dictionaryData[dictionaryKeys[i]],
       subtag: dictionaryData[dictionaryKeys[i+1]],
@@ -274,7 +263,7 @@ router.post('/insert', function(request, response) {
     items.push(item);
 
     var tagItem = {
-      user: id,
+      user: username,
       subtag: dictionaryData[dictionaryKeys[i+1]],
       title: dictionaryData[dictionaryKeys[i+2]],
       content: dictionaryData[dictionaryKeys[i+3]]
@@ -314,9 +303,9 @@ router.post('/insert', function(request, response) {
     console.log(db);
 
     // insert under name under users
-    db.collection(id).insert(items, function() {
+    db.collection(username).insert(items, function() {
       assert.equal(null, error);
-      console.log("successfully inserted in " + id);
+      console.log("successfully inserted in " + username);
     });
 
     // push in tag collections
