@@ -88,51 +88,72 @@ router.post('/register', function(request, response, next) {
 
   var passed = true;
 
+  // if email is empty - error
+  if (email == "") {
+    errorMessage += "Email missing";
+    passed = false;
+  }
   // check email - if email found - error
-  User.findOne({email: email}, function(error, email) {
-    if (email) {
-      errorMessage += "Email taken";
-      passed = false;
-    }
-  });
+  else {
+    User.findOne({email: email}, function(error, email) {
+      if (email) {
+        errorMessage += "Email taken";
+        passed = false;
+      }
+    });
+  }
 
-  // check key - if key not found - error
-  Key.findOne({key: key}, function(error, keyFound) {
-    assert.equal(null, error);
-    if (!keyFound) {
-      (errorMessage == "") ? errorMessage += "Invalid Key" : errorMessage += ", Invalid Key";
-      passed = false;
-    }
-  });
+  if (key == "") {
+    (errorMessage == "") ? errorMessage += "Key missing" : errorMessage += ", Key missing";
+    passed = false;
+  }
+  else {
+    // check key - if key not found/empty - error
+    Key.findOne({key: key}, function(error, keyFound) {
+      assert.equal(null, error);
+      if (!keyFound) {
+        (errorMessage == "") ? errorMessage += "Invalid Key" : errorMessage += ", Invalid Key";
+        passed = false;
+      }
+    });
 
-  // check duplicate key - if key found - error
-  User.findOne({key: key}, function(error, usedKeyFound) {
-    assert.equal(null, error);
-    if (usedKeyFound) {
-      (errorMessage == "") ? errorMessage += "Key taken" : errorMessage += ", Key taken";
-      passed = false;
-    }
-  });
+    // check duplicate key - if key found - error
+    User.findOne({key: key}, function(error, usedKeyFound) {
+      assert.equal(null, error);
+      if (usedKeyFound) {
+        (errorMessage == "") ? errorMessage += "Key taken" : errorMessage += ", Key taken";
+        passed = false;
+      }
+    });
 
-  // check username - if username already exists - error
-  User.findOne({username: username}, function(error, username) {
-    assert.equal(null, error);
-    if (username) {
-      (errorMessage == "") ? errorMessage += "Username taken" : errorMessage = "Username taken, " + errorMessage;
-      passed = false;
-    }
-    if (passed) {
-      newUser.save(function(error, savedUser) {
-        assert.equal(null, error);
-        console.log("Successfully inserted " + newUser.username);
-        response.render('index', {Success: 'Registration Successful'});
-      });
-    }
-    else {
-      console.log(errorMessage);
-      response.render('index', {regError: errorMessage});
-    }
-  });
+  }
+
+  if (username == "") {
+    (errorMessage == "") ? errorMessage += "Username missing" : errorMessage = "Username missing, " + errorMessage;
+    passed = false;
+    response.render('index', {regError: errorMessage});
+  }
+  else {
+    // check username - if username already exists - error
+    User.findOne({username: username}, function(error, username) {
+      assert.equal(null, error);
+      if (username) {
+        (errorMessage == "") ? errorMessage += "Username taken" : errorMessage = "Username taken, " + errorMessage;
+        passed = false;
+      }
+      if (passed) {
+        newUser.save(function(error, savedUser) {
+          assert.equal(null, error);
+          console.log("Successfully inserted " + newUser.username);
+          response.render('index', {Success: 'Registration Successful'});
+        });
+      }
+      else {
+        console.log(errorMessage);
+        response.render('index', {regError: errorMessage});
+      }
+    });
+  }
 });
 
 // when login pressed, redirect to form page
