@@ -218,7 +218,6 @@ router.post('/forgotPassword', function(request, response) {
         if (!user) {  // display something
           return response.render('index', {forgotError: 'Invalid email'});
         }
-
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
@@ -248,7 +247,7 @@ router.post('/forgotPassword', function(request, response) {
         subject: 'Password Reset',
         text: 'You are receiving this message because a request has been sent to reset password for your account.\n\n' +
           'Please click on the following link to complete the process:\n\n' +
-          'http://' + request.headers.host + '/reset/' + token + '\n\n' +
+          'http://' + request.headers.host + '/forgotPassword/' + token + '\n\n' +
           'If you did not request this, please ignore the email and your password will remain unchanged.\n'
       };
 
@@ -271,20 +270,19 @@ router.post('/forgotPassword', function(request, response) {
   });
 });
 
-router.get('/reset/:token', function(request, response) {
+router.get('/forgotPassword/:token', function(request, response) {
   var token = request.params.token;
   User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } }, function(error, user) {
     assert.equal(null, error);
     if (!user) {
-      console.log('Password reset token is invalid or has expired.');
-      return response.render('index');
+      return response.render('index', {Fail: 'Password reset token is invalid or has expired'});
     }
     console.log(request.user);
     response.render('resetPassword');
   });
 });
 
-router.post('/reset/:token', function(request, response) {
+router.post('/forgotPassword/:token', function(request, response) {
   var token = request.params.token;
 
   async.waterfall([
@@ -292,8 +290,7 @@ router.post('/reset/:token', function(request, response) {
       User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } }, function(error, user) {
         assert.equal(null, error);
         if (!user) {
-          console.log('Password reset token is invalid or has expired.');
-          return response.render('index');
+          return response.render('index', {Fail: 'Password reset token is invalid or has expired'});
         }
 
         user.password = request.body.password;
@@ -325,7 +322,7 @@ router.post('/reset/:token', function(request, response) {
       let mailOptions = {
         from: '"Aether Forms 👻" <aetherforms@gmail.com>',
         to: email,
-        subject: 'Password Reset',
+        subject: 'Password Confirmation',
         text: 'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
       };
 
@@ -348,7 +345,7 @@ router.post('/reset/:token', function(request, response) {
   });
 });
 
-router.post('/logout', function(request, response) {
+router.get('/logout', function(request, response) {
   request.session.destroy();
   response.render('index');
 });
