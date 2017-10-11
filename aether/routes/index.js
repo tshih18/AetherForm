@@ -198,9 +198,11 @@ router.post('/login', function(request, response, next) {
   });
 });
 
+var email;
+
 router.post('/forgotPassword', function(request, response) {
 
-  var email = request.body.email;
+  email = request.body.email;
 
   async.waterfall([
     function(done) {
@@ -244,7 +246,7 @@ router.post('/forgotPassword', function(request, response) {
         from: '"Aether Forms 👻" <aetherforms@gmail.com>',
         to: email,
         subject: 'Password Reset',
-        text: 'You are receiving this message because a request has been sent to request password for your account.\n\n' +
+        text: 'You are receiving this message because a request has been sent to reset password for your account.\n\n' +
           'Please click on the following link to complete the process:\n\n' +
           'http://' + request.headers.host + '/reset/' + token + '\n\n' +
           'If you did not request this, please ignore the email and your password will remain unchanged.\n'
@@ -265,7 +267,7 @@ router.post('/forgotPassword', function(request, response) {
   ],
   function(error) {
     if (error) return next(error);
-    response.error('index');
+    response.render('index');
   });
 });
 
@@ -278,13 +280,77 @@ router.get('/reset/:token', function(request, response) {
       return response.render('index');
     }
     console.log(request.user);
+    response.render('resetPassword');
+  });
+});
+
+router.post('/reset/:token', function(request, response) {
+  var token = request.params.token;
+
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } }, function(error, user) {
+        assert.equal(null, error);
+        if (!user) {
+          console.log('Password reset token is invalid or has expired.');
+          return response.render('index');
+        }
+
+        user.password = request.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(error) {
+          //req.logIn(user, function(err) {
+            done(error, user);
+          //});
+        });
+      });
+    },
+    function(user, done) {
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: 'aetherforms@gmail.com',
+          clientId: '887921205506-qnidqf0nf9n587ubkmsrnufq05rn352j.apps.googleusercontent.com',
+          clientSecret: 'ITEzdWwrOK5yBTfOMLYNejB1',
+          refreshToken: '1/C6z1EyaZE9hivbOeHbaTX4_f4jUQUGkbXzP_1Lqy9Lz41UzdiqwDo-iMBoQpOXKJ',
+          accessToken: 'ya29.GlvgBF6A-TA2P5FXonL5kbJjOidpv931tQJ1fLV_fzc7ImZzSheSg5ybwy7-DIMldzEEfE5d14nFUFzKbqzAyRKNGUNZzKcUNanLzlKK0zDVie3vRK5hharrjlgC'
+        }
+      });
+
+      // setup email data with unicode symbols
+      let mailOptions = {
+        from: '"Aether Forms 👻" <aetherforms@gmail.com>',
+        to: email,
+        subject: 'Password Reset',
+        text: 'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        response.render('index', {Success: 'Success! Your password has changed'});
+      });
+
+    }
+  ],
+  function(error) {
+    if (error) return next(error);
     response.render('index');
   });
 });
 
 router.post('/logout', function(request, response) {
   request.session.destroy();
-  response.redirect('/');
+  response.render('index');
 });
 
 router.get('/form', function(request, response) {
@@ -297,7 +363,6 @@ router.get('/form', function(request, response) {
     response.render('form');
   }
 });
-
 
 // get data from database
 // use post because we want to get the specific collection name to show
