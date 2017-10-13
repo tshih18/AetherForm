@@ -1,21 +1,22 @@
-// import express to use it
+// require node package modules
 const express = require('express');
-// execute express
+// used to execute express
 const router = express.Router();
-// import fs library
+// used to open files
 const fs = require('fs');
 // import mongodb
 const mongo = require('mongodb').MongoClient;
-// import mongoose
+// used for mongo to organize structure of collections
 const mongoose = require('mongoose');
-// get object ID
+// used to get object ID
 const objectID = require('mongodb').ObjectID;
 // used for testing
 const assert = require('assert');
-// for password encryption
+// used for password encryption
 const bcrypt = require('bcrypt');
-// parse response body
+// used to parse response body
 const bodyParser = require('body-parser');
+
 // parse application/x-www-form-urlencoded
 router.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
@@ -28,7 +29,6 @@ mongoose.Promise = global.Promise;
 // connect with mongoose once
 mongoose.connect(usersURL);
 //createConnection removes warnings but doesnt actually connect
-
 
 var User = require('../model/User');
 var Key = require('../model/Key');
@@ -84,6 +84,7 @@ router.post('/register', function(request, response, next) {
   newUser.email = email;
   newUser.password = password;
   newUser.key = key;
+  newUser.posts = 0;
   console.log(newUser);
 
   var passed = true;
@@ -184,7 +185,14 @@ router.post('/login', function(request, response, next) {
         if (isMatch && isMatch == true) {
           // save user in session
           request.session.user = user;
-          response.render('form');
+          if (username == "aether") {
+            //response.render('dashboard');
+            response.redirect('/dashboard');
+          }
+          else {
+            response.redirect('/form');
+          }
+
         }
         else {
           console.log("Incorrect password");

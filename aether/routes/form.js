@@ -11,9 +11,10 @@ const assert = require('assert');
 
 var usersURL = 'mongodb://localhost:27017/users';
 
-var didPushProblems = false;
-var didPushQuestions = false;
-var didPushSuggestions = false;
+var User = require('../model/User');
+var Problem = require('../model/Problem');
+var Question = require('../model/Question');
+var Suggestion = require('../model/Suggestion');
 
 // makes sure only authenticated users can access page
 router.get('/', function(request, response) {
@@ -42,9 +43,6 @@ router.post('/insert', function(request, response) {
 
   // push these items in id collection
   var items = [];
-  var problems = [];
-  var questions = [];
-  var suggestions = [];
 
   // will be the username to store collection
   var username = request.session.user.username;
@@ -61,40 +59,58 @@ router.post('/insert', function(request, response) {
     console.log(item);
     items.push(item);
 
-    var tagItem = {
-      user: username,
-      subtag: dictionaryData[dictionaryKeys[i+1]],
-      title: dictionaryData[dictionaryKeys[i+2]],
-      content: dictionaryData[dictionaryKeys[i+3]]
-    };
-    console.log(tagItem);
-
     // also put in tag collections
     switch(item.tag) {
       case "Problems":
-        problems.push(tagItem);
-        console.log("Problems pushed");
-        didPushProblems = true;
+        var newProblem = new Problem();
+        newProblem.user = username;
+        newProblem.subtag = dictionaryData[dictionaryKeys[i+1]];
+        newProblem.title = dictionaryData[dictionaryKeys[i+2]];
+        newProblem.content = dictionaryData[dictionaryKeys[i+3]];
+        newProblem.save(function(error) {
+          console.log("Problems saved");
+        });
         break;
       case "Questions":
-        questions.push(tagItem);
-        console.log("Questions pushed");
-        didPushQuestions = true;
+        var newQuestion = new Question();
+        newQuestion.user = username;
+        newQuestion.subtag = dictionaryData[dictionaryKeys[i+1]];
+        newQuestion.title = dictionaryData[dictionaryKeys[i+2]];
+        newQuestion.content = dictionaryData[dictionaryKeys[i+3]];
+        newQuestion.save(function(error) {
+          console.log("Questions saved");
+        });
         break;
       case "Suggestions":
-        suggestions.push(tagItem);
-        console.log("Suggestions pushed");
-        didPushSuggestions = true;
+        var newSuggestion = new Suggestion();
+        newSuggestion.user = username;
+        newSuggestion.subtag = dictionaryData[dictionaryKeys[i+1]];
+        newSuggestion.title = dictionaryData[dictionaryKeys[i+2]];
+        newSuggestion.content = dictionaryData[dictionaryKeys[i+3]];
+        newSuggestion.save(function(error) {
+          console.log("Suggestions saved");
+        });
         break;
       default:
         break;
     }
   }
 
-  response.redirect('/form');
+  response.render('form', {message: 'Success! Form has been submitted'})
   console.log("preparing to insert");
 
-  // connect to mongo db db
+  // update number of posts
+  User.findOne({username: request.session.user.username}, function(error, user) {
+    assert.equal(null, error);
+    user.posts += items.length;
+
+    user.save(function(error) {
+      assert.equal(null, error);
+      console.log("Successfully updated number of posts");
+    });
+  });
+
+  // save collection under their username
   mongo.connect(usersURL, function(error, db) {
     assert.equal(null, error);
     console.log("connected to database");
@@ -105,33 +121,13 @@ router.post('/insert', function(request, response) {
       assert.equal(null, error);
       console.log("successfully inserted in " + username);
     });
-
-    // push in tag collections
-    if (didPushProblems == true) {
-      db.collection("Problems").insert(problems, function() {
-        assert.equal(null, error);
-        console.log("Successfully inserted in Problems");
-      });
-    }
-    if (didPushQuestions == true) {
-      db.collection("Questions").insert(questions, function() {
-        assert.equal(null, error);
-        console.log("Successfully inserted in Questions");
-      });
-    }
-    if (didPushSuggestions == true) {
-      db.collection("Suggestions").insert(suggestions, function() {
-        assert.equal(null, error);
-        console.log("Successfully inserted in Suggestions");
-      });
-    }
     db.close();
   });
 });
 
 router.get('/logout', function(request, response) {
   request.session.destroy();
-  response.render('index');
+  response.redirect('/');
 });
 
 /* get data from database
