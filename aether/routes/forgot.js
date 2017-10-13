@@ -18,6 +18,7 @@ mongoose.Promise = global.Promise;
 
 var User = require('../model/User');
 
+// global bc need to send emails
 var email;
 
 router.post('/', function(request, response) {

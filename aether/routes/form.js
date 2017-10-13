@@ -32,13 +32,23 @@ router.get('/', function(request, response) {
 router.post('/insert', function(request, response) {
   console.log(request.body);
 
+  // save time and Date inserted
+  var now = new Date();
+  var ms = now.getTime();
+  var month = now.getMonth()+1;  // janurary is 0
+  var day = now.getDate();
+  var year = now.getFullYear();
+  var hour = now.getHours();
+  var minute = now.getMinutes();
+
+  var date = month + "/" + day + "/" + year;
+  var time = hour + ":" + minute;
+
   // save every section in database
   var dictionarySize = Object.keys(request.body).length;
   var numOfSections = dictionarySize/2;
 
-  // array of values
   var dictionaryData = request.body;
-  // array of keys
   var dictionaryKeys = Object.keys(dictionaryData);
 
   // push these items in id collection
@@ -52,7 +62,10 @@ router.post('/insert', function(request, response) {
       tag: dictionaryData[dictionaryKeys[i]],
       subtag: dictionaryData[dictionaryKeys[i+1]],
       title: dictionaryData[dictionaryKeys[i+2]],
-      content: dictionaryData[dictionaryKeys[i+3]]
+      content: dictionaryData[dictionaryKeys[i+3]],
+      date: date,
+      time: time,
+      milliSeconds: ms
     };
 
     // print item to insert
@@ -67,7 +80,11 @@ router.post('/insert', function(request, response) {
         newProblem.subtag = dictionaryData[dictionaryKeys[i+1]];
         newProblem.title = dictionaryData[dictionaryKeys[i+2]];
         newProblem.content = dictionaryData[dictionaryKeys[i+3]];
+        newProblem.date = date;
+        newProblem.time = time;
+        newProblem.milliSeconds = ms;
         newProblem.save(function(error) {
+          assert.equal(null, error);
           console.log("Problems saved");
         });
         break;
@@ -77,7 +94,11 @@ router.post('/insert', function(request, response) {
         newQuestion.subtag = dictionaryData[dictionaryKeys[i+1]];
         newQuestion.title = dictionaryData[dictionaryKeys[i+2]];
         newQuestion.content = dictionaryData[dictionaryKeys[i+3]];
+        newQuestion.date = date;
+        newQuestion.time = time;
+        newQuestion.milliSeconds = ms;
         newQuestion.save(function(error) {
+          assert.equal(null, error);
           console.log("Questions saved");
         });
         break;
@@ -87,7 +108,11 @@ router.post('/insert', function(request, response) {
         newSuggestion.subtag = dictionaryData[dictionaryKeys[i+1]];
         newSuggestion.title = dictionaryData[dictionaryKeys[i+2]];
         newSuggestion.content = dictionaryData[dictionaryKeys[i+3]];
+        newSuggestion.date = date;
+        newSuggestion.time = time;
+        newSuggestion.milliSeconds = ms;
         newSuggestion.save(function(error) {
+          assert.equal(null, error);
           console.log("Suggestions saved");
         });
         break;
@@ -126,6 +151,33 @@ router.post('/insert', function(request, response) {
 });
 
 router.get('/logout', function(request, response) {
+
+  User.findOne({username: request.session.user.username}, function(error, user) {
+    assert.equal(null, error);
+
+    // update time and Date active
+    var now = new Date();
+    var ms = now.getTime();
+    var month = now.getMonth()+1;  // janurary is 0
+    var day = now.getDate();
+    var year = now.getFullYear();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+
+    var date = month + "/" + day + "/" + year;
+    var time = hour + ":" + minute;
+
+    user.dateLastActive = date;
+    user.timeLastActive = time;
+    user.milliSeconds = ms;
+
+    user.save(function(error) {
+      assert.equal(null, error);
+      console.log("Updated last time user was active");
+    })
+
+  });
+
   request.session.destroy();
   response.redirect('/');
 });

@@ -31,7 +31,7 @@ router.get('/', function(request, response) {
     users.forEach(function(user) {
       if (user.username != "aether") {
         usernames.push(user.username);
-        metadata.push([user.username, user.email, user.key, user.posts]);
+        metadata.push([user.username, user.email, user.key, user.posts, user.dateLastActive, user.timeLastActive]);
       }
     });
   });
@@ -65,11 +65,13 @@ router.get('/', function(request, response) {
 
 
 
+
+
 });
 
 router.get('/logout', function(request, response) {
   request.session.destroy();
-  response.render('index');
+  response.redirect('/');
 });
 
 

@@ -183,6 +183,27 @@ router.post('/login', function(request, response, next) {
       user.comparePassword(password, function(err, isMatch) {
         // username is found
         if (isMatch && isMatch == true) {
+          // save time and Date logged in
+          var date = new Date();
+          var ms = date.getTime();
+          var month = date.getMonth()+1;  // janurary is 0
+          var day = date.getDate();
+          var year = date.getFullYear();
+          var hour = date.getHours();
+          var minute = date.getMinutes();
+
+          var date = month + "/" + day + "/" + year;
+          var time = hour + ":" + minute;
+
+          user.dateLastActive = date;
+          user.timeLastActive = time;
+          user.milliSeconds = ms;
+
+          user.save(function(error) {
+            assert.equal(null, error);
+            console.log("Updated time user logged in");
+          });
+
           // save user in session
           request.session.user = user;
           if (username == "aether") {
