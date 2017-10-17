@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 // to send emails
 const nodemailer = require('nodemailer');
-
+// used to parse response body
+const bodyParser = require('body-parser');
 
 // connect with mongoose
 mongoose.Promise = global.Promise;
@@ -62,8 +63,43 @@ router.get('/', function(request, response) {
     response.render('dashboard', {user: usernames, metadata: metadata, problem: problemData, question: questionData, suggestion: suggestionData});
   });
 
+});
 
+router.post('/reply', function(request, response) {
+  console.log(request.body.replyTitle);
+  console.log(request.body.replyEmail);
+  console.log(request.body.replyContent);
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: 'aetherforms@gmail.com',
+      clientId: '887921205506-qnidqf0nf9n587ubkmsrnufq05rn352j.apps.googleusercontent.com',
+      clientSecret: 'ITEzdWwrOK5yBTfOMLYNejB1',
+      refreshToken: '1/C6z1EyaZE9hivbOeHbaTX4_f4jUQUGkbXzP_1Lqy9Lz41UzdiqwDo-iMBoQpOXKJ',
+      accessToken: 'ya29.GlvgBF6A-TA2P5FXonL5kbJjOidpv931tQJ1fLV_fzc7ImZzSheSg5ybwy7-DIMldzEEfE5d14nFUFzKbqzAyRKNGUNZzKcUNanLzlKK0zDVie3vRK5hharrjlgC'
+    }
+  });
 
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"Aether Forms 👻" <aetherforms@gmail.com>',
+    to: request.body.replyEmail,
+    subject: request.body.replyTitle,
+    text: request.body.replyContent
+  };
+  
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+    //response.render('index', {Success: 'Email has been sent!'});
+    response.redirect('/dashboard');
+  });
 
 
 
