@@ -32,17 +32,6 @@ router.get('/', function(request, response) {
 router.post('/insert', function(request, response) {
   console.log(request.body);
 
-  // save time and Date inserted
-  var now = new Date();
-  var ms = now.getTime();
-  var month = now.getMonth()+1;  // janurary is 0
-  var day = now.getDate();
-  var year = now.getFullYear();
-  var hour = now.getHours();
-  var minute = now.getMinutes();
-
-  var date = month + "/" + day + "/" + year;
-  var time = hour + ":" + minute;
 
   // save every section in database
   var dictionarySize = Object.keys(request.body).length;
@@ -58,6 +47,21 @@ router.post('/insert', function(request, response) {
   var username = request.session.user.username;
 
   for (var i = 0; i < dictionarySize; i+=4) {
+
+    // save time and Date inserted
+    var now = new Date();
+    // want milliSeconds to be unique bc they will be keys in dictionary
+    var ms = now.getTime()+1; // make unique in case same time
+    var month = now.getMonth()+1;  // janurary is 0
+    var day = now.getDate();
+    var year = now.getFullYear();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+
+    var date = month + "/" + day + "/" + year;
+    var time = hour + ":" + minute;
+
+
     var item = {
       tag: dictionaryData[dictionaryKeys[i]],
       subtag: dictionaryData[dictionaryKeys[i+1]],
@@ -121,7 +125,7 @@ router.post('/insert', function(request, response) {
     }
   }
 
-  response.render('form', {message: 'Success! Form has been submitted'})
+
   console.log("preparing to insert");
 
   // update number of posts
@@ -147,6 +151,7 @@ router.post('/insert', function(request, response) {
       console.log("successfully inserted in " + username);
     });
     db.close();
+    response.render('form', {message: 'Success! Form has been submitted'})
   });
 });
 
