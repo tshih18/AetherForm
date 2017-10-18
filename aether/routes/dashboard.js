@@ -20,6 +20,20 @@ var Question = require('../model/Question');
 var Suggestion = require('../model/Suggestion');
 
 router.get('/', function(request, response) {
+/* implement authentication
+  console.log(request.session.user);
+  // check if user is authenticated
+  if (!request.session.user) {
+    console.log("User hasent been authenticated")
+    response.render('index');
+  }
+  else {
+    console.log("User already authenticated");
+    response.redirect('/dashboard');
+  }
+*/
+
+
   var usernames = [];
   var metadata = [];
   var problemData = [];
@@ -88,7 +102,7 @@ router.post('/reply', function(request, response) {
     subject: request.body.replyTitle,
     text: request.body.replyContent
   };
-  
+
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {

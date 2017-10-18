@@ -81,7 +81,7 @@ router.post('/insert', function(request, response) {
       if (hour != 12) {
         hour = hour - 12;
       }
-      
+
       // fix single digit minutes '0#'
       if (minute < 10) {
         time = hour + ":0" + minute + "PM";
@@ -90,10 +90,6 @@ router.post('/insert', function(request, response) {
         time = hour + ":" + minute + "PM";
       }
     }
-
-
-
-
 
     var item = {
       tag: dictionaryData[dictionaryKeys[i]],
@@ -203,7 +199,37 @@ router.get('/logout', function(request, response) {
     var minute = now.getMinutes();
 
     var date = month + "/" + day + "/" + year;
-    var time = hour + ":" + minute;
+    var time;
+
+    // AM
+    if (hour < 12) {
+      // if hour == 0, 12AM
+      if (hour == 0) {
+        hour = 12;
+      }
+
+      // fix single digit minutes '0#'
+      if (minute < 10) {
+        time = hour + ":0" + minute + "AM";
+      }
+      else {
+        time = hour + ":" + minute + "AM";
+      }
+    }
+    // PM
+    else {
+      if (hour != 12) {
+        hour = hour - 12;
+      }
+
+      // fix single digit minutes '0#'
+      if (minute < 10) {
+        time = hour + ":0" + minute + "PM";
+      }
+      else {
+        time = hour + ":" + minute + "PM";
+      }
+    }
 
     user.dateLastActive = date;
     user.timeLastActive = time;
