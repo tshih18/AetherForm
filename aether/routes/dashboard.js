@@ -36,9 +36,6 @@ router.get('/', function(request, response) {
 
   var usernames = [];
   var metadata = [];
-  var problemData = [];
-  var questionData = [];
-  var suggestionData = [];
 
   var usersObj = {};
   var problemObj = [];
@@ -66,9 +63,7 @@ router.get('/', function(request, response) {
   // fetch problems
   Problem.find({}, function(error, problems) {
     assert.equal(null, error);
-
     problems.forEach(function(problem) {
-      problemData.push([problem.user, problem.subtag, problem.title, problem.content, problem.date, problem.time, problem.milliSeconds]);
       var data = {
         "user": problem.user,
         "subtag": problem.subtag,
@@ -88,7 +83,6 @@ router.get('/', function(request, response) {
   Question.find({}, function(error, questions) {
     assert.equal(null, error);
     questions.forEach(function(question) {
-      questionData.push([question.user, question.subtag, question.title, question.content, question.date, question.time, question.milliSeconds]);
       var data = {
         "user": question.user,
         "subtag": question.subtag,
@@ -108,7 +102,6 @@ router.get('/', function(request, response) {
   Suggestion.find({}, function(error, suggestions) {
     assert.equal(null, error);
     suggestions.forEach(function(suggestion) {
-      suggestionData.push([suggestion.user, suggestion.subtag, suggestion.title, suggestion.content, suggestion.date, suggestion.time, suggestion.milliSeconds]);
       var data = {
         "user": suggestion.user,
         "subtag": suggestion.subtag,
