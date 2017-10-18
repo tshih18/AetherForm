@@ -30,9 +30,6 @@ router.get('/', function(request, response) {
 
 // insert data into database
 router.post('/insert', function(request, response) {
-  console.log(request.body);
-
-
   // save every section in database
   var dictionarySize = Object.keys(request.body).length;
   var numOfSections = dictionarySize/2;
