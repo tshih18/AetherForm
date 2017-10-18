@@ -39,10 +39,15 @@ router.get('/', function(request, response) {
   var problemData = [];
   var questionData = [];
   var suggestionData = [];
+  var usersObj = {};
+  var problemObj = [];
+  var problemObjStr;
 
   // fetch users and their metadata
   User.find({}, function(error, users) {
     assert.equal(null, error);
+    usersObj = users;
+    //console.log(usersObj);
     users.forEach(function(user) {
       if (user.username != "aether") {
         usernames.push([user.username, user.milliSeconds]);
@@ -54,9 +59,27 @@ router.get('/', function(request, response) {
   // fetch problems
   Problem.find({}, function(error, problems) {
     assert.equal(null, error);
+
     problems.forEach(function(problem) {
       problemData.push([problem.user, problem.subtag, problem.title, problem.content, problem.date, problem.time, problem.milliSeconds]);
+      var data = {
+        "user": problem.user,
+        "subtag": problem.subtag,
+        "title": problem.title,
+        "content": problem.content,
+        "date": problem.date,
+        "time": problem.time,
+        "milliSeconds": problem.milliSeconds
+      };
+      problemObj.push(data);
+
+
+
+
+
     });
+    console.log(problemObj);
+    problemObjStr = JSON.stringify(problemObj);
   });
 
   // fetch questions
@@ -74,7 +97,7 @@ router.get('/', function(request, response) {
       suggestionData.push([suggestion.user, suggestion.subtag, suggestion.title, suggestion.content, suggestion.date, suggestion.time, suggestion.milliSeconds]);
     });
 
-    response.render('dashboard', {user: usernames, metadata: metadata, problem: problemData, question: questionData, suggestion: suggestionData});
+    response.render('dashboard', {user: usernames, user1: usersObj, metadata: metadata, problem: problemData, problem1: problemObjStr, question: questionData, suggestion: suggestionData});
   });
 
 });
