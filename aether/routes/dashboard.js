@@ -39,9 +39,16 @@ router.get('/', function(request, response) {
   var problemData = [];
   var questionData = [];
   var suggestionData = [];
+
   var usersObj = {};
   var problemObj = [];
   var problemObjStr;
+
+  var questionObj = [];
+  var questionObjStr;
+
+  var suggestionObj = [];
+  var suggestionObjStr;
 
   // fetch users and their metadata
   User.find({}, function(error, users) {
@@ -73,12 +80,7 @@ router.get('/', function(request, response) {
       };
       problemObj.push(data);
 
-
-
-
-
     });
-    console.log(problemObj);
     problemObjStr = JSON.stringify(problemObj);
   });
 
@@ -87,7 +89,19 @@ router.get('/', function(request, response) {
     assert.equal(null, error);
     questions.forEach(function(question) {
       questionData.push([question.user, question.subtag, question.title, question.content, question.date, question.time, question.milliSeconds]);
+      var data = {
+        "user": question.user,
+        "subtag": question.subtag,
+        "title": question.title,
+        "content": question.content,
+        "date": question.date,
+        "time": question.time,
+        "milliSeconds": question.milliSeconds
+      };
+      questionObj.push(data);
+
     });
+    questionObjStr = JSON.stringify(questionObj);
   });
 
   // fetch suggestions
@@ -95,9 +109,21 @@ router.get('/', function(request, response) {
     assert.equal(null, error);
     suggestions.forEach(function(suggestion) {
       suggestionData.push([suggestion.user, suggestion.subtag, suggestion.title, suggestion.content, suggestion.date, suggestion.time, suggestion.milliSeconds]);
+      var data = {
+        "user": suggestion.user,
+        "subtag": suggestion.subtag,
+        "title": suggestion.title,
+        "content": suggestion.content,
+        "date": suggestion.date,
+        "time": suggestion.time,
+        "milliSeconds": suggestion.milliSeconds
+      };
+      suggestionObj.push(data);
     });
+    suggestionObjStr = JSON.stringify(suggestionObj);
 
-    response.render('dashboard', {user: usernames, user1: usersObj, metadata: metadata, problem: problemData, problem1: problemObjStr, question: questionData, suggestion: suggestionData});
+    response.render('dashboard', {user: usernames, user1: usersObj,
+      metadata: metadata, problem: problemObjStr, question: questionObjStr, suggestion: suggestionObjStr});
   });
 
 });
