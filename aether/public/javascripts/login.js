@@ -66,7 +66,7 @@ $('#register input').focusout(function() {
         $('#field-username .error').text("Enter a username");
         var text = $('#field-username .error').text();
         var width = calcWidth(text, $('#field-username .error'));
-        $('#field-username .error').css("width", width+10);
+        $('#field-username .error').css("width", width+20);
       }
       else if ($(this).val().length < 6) {
         $('#field-username #check').css("display", "none");
@@ -74,7 +74,7 @@ $('#register input').focusout(function() {
         $('#field-username .error').text("Username must be at least 6 characters");
         var text = $('#field-username .error').text();
         var width = calcWidth(text, $('#field-username .error'))
-        $('#field-username .error').css("width", width+10);
+        $('#field-username .error').css("width", width+20);
       }
       // if username checking passes
       else if ($(this).val().length >= 6) {
@@ -90,7 +90,7 @@ $('#register input').focusout(function() {
         $('#field-email .error').text("Enter a email");
         var text = $('#field-email .error').text();
         var width = calcWidth(text, $('#field-email .error'))
-        $('#field-email .error').css("width", width+10);
+        $('#field-email .error').css("width", width+20);
       }
       else {
         var email = $(this).val();
@@ -106,7 +106,7 @@ $('#register input').focusout(function() {
           $('#field-email .error').text("Enter a valid email");
           var text = $('#field-email .error').text();
           var width = calcWidth(text, $('#field-email .error'))
-          $('#field-email .error').css("width", width+10);
+          $('#field-email .error').css("width", width+32);
         }
       }
       break;
@@ -117,7 +117,7 @@ $('#register input').focusout(function() {
           $('#field-key .error').text("Enter a key");
           var text = $('#field-key .error').text();
           var width = calcWidth(text, $('#field-key .error'))
-          $('#field-key .error').css("width", width+10);
+          $('#field-key .error').css("width", width+20);
         }
         else if ($(this).val().length < 10 || $(this).val().length > 10) {
           $('#field-key #check').css("display", "none");
@@ -125,7 +125,7 @@ $('#register input').focusout(function() {
           $('#field-key .error').text("Key must be 10 characters");
           var text = $('#field-key .error').text();
           var width = calcWidth(text, $('#field-key .error'))
-          $('#field-key .error').css("width", width+10);
+          $('#field-key .error').css("width", width+20);
         }
         // if key checking passes
         else {
@@ -141,7 +141,7 @@ $('#register input').focusout(function() {
           $('#field-password .error').text("Enter a password");
           var text = $('#field-password .error').text();
           var width = calcWidth(text, $('#field-password .error'))
-          $('#field-password .error').css("width", width+10);
+          $('#field-password .error').css("width", width+20);
         }
         else if ($(this).val().length < 6) {
           $('#field-password #check').css("display", "none");
@@ -149,7 +149,7 @@ $('#register input').focusout(function() {
           $('#field-password .error').text("Password must be at least 6 characters");
           var text = $('#field-password .error').text();
           var width = calcWidth(text, $('#field-password .error'))
-          $('#field-password .error').css("width", width+10);
+          $('#field-password .error').css("width", width+20);
         }
         // if password checking passes
         else {
@@ -165,7 +165,7 @@ $('#register input').focusout(function() {
           $('#field-confirmPassword .error').text("Confirm your password");
           var text = $('#field-confirmPassword .error').text();
           var width = calcWidth(text, $('#field-confirmPassword .error'))
-          $('#field-confirmPassword .error').css("width", width+10);
+          $('#field-confirmPassword .error').css("width", width+20);
         }
         else if ($(this).val() != $('#password').val()) {
           $('#field-confirmPassword #check').css("display", "none");
@@ -173,7 +173,7 @@ $('#register input').focusout(function() {
           $('#field-confirmPassword .error').text("Passwords must match");
           var text = $('#field-confirmPassword .error').text();
           var width = calcWidth(text, $('#field-confirmPassword .error'))
-          $('#field-confirmPassword .error').css("width", width+10);
+          $('#field-confirmPassword .error').css("width", width+20);
         }
         else {
           $('#field-confirmPassword #cross').css("display", "none");
