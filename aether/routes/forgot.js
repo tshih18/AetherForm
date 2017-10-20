@@ -13,20 +13,20 @@ const crypto = require('crypto');
 // to avoid nesting callbacks within callbacks within callbacks
 const async = require('async');
 
-// connect with mongoose
-mongoose.Promise = global.Promise;
-
+// get object from mongoose object model
 var User = require('../model/User');
 
-// global bc need to send emails
+// save email to send to
 var email;
 
 router.post('/', function(request, response) {
 
   email = request.body.email;
 
+  // use async.waterfall to sync async functions
   async.waterfall([
     function(done) {
+      // generate unique token
       crypto.randomBytes(20, function(error, buf) {
         assert.equal(null, error);
         var token = buf.toString('hex');
@@ -36,9 +36,12 @@ router.post('/', function(request, response) {
     function(token, done) {
       User.findOne({ email: email }, function(error, user) {
         assert.equal(null, error);
-        if (!user) {  // display something
+        // if entered email does not match in database, error
+        if (!user) {
           return response.render('index', {forgotError: 'Invalid email'});
         }
+
+        // save token in user's database and also 1hr expiration date
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
@@ -61,7 +64,7 @@ router.post('/', function(request, response) {
         }
       });
 
-      // setup email data with unicode symbols
+      // setup email data
       let mailOptions = {
         from: '"Aether Forms 👻" <aetherforms@gmail.com>',
         to: email,
@@ -93,33 +96,35 @@ router.post('/', function(request, response) {
 
 router.get('/:token', function(request, response) {
   var token = request.params.token;
+  // check if token is found and not expired
   User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } }, function(error, user) {
     assert.equal(null, error);
     if (!user) {
       return response.render('index', {Fail: 'Password reset token is invalid or has expired'});
     }
-    console.log(request.user);
     response.render('resetPassword');
   });
 });
 
 router.post('/:token', function(request, response) {
   var token = request.params.token;
-
+  // use async.waterfall to sync async functions
   async.waterfall([
     function(done) {
+      // check if token is found and not expired
       User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } }, function(error, user) {
         assert.equal(null, error);
         if (!user) {
           return response.render('index', {Fail: 'Password reset token is invalid or has expired'});
         }
 
+        // save new password and reset token fields
         user.password = request.body.password;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
 
         user.save(function(error) {
-          //req.logIn(user, function(err) {
+          //req.logIn(user, function(err) { // if i want to login user after resetting password
             done(error, user);
           //});
         });
@@ -139,7 +144,7 @@ router.post('/:token', function(request, response) {
         }
       });
 
-      // setup email data with unicode symbols
+      // setup email data
       let mailOptions = {
         from: '"Aether Forms 👻" <aetherforms@gmail.com>',
         to: email,

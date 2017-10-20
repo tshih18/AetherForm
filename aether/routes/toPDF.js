@@ -11,7 +11,6 @@ page.paperSize = {
 
 }
 
-
 page.onLoadFinished = function() {
   console.log("page load finished");
   page.render(filename);

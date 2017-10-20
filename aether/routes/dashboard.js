@@ -11,33 +11,25 @@ const nodemailer = require('nodemailer');
 // used to parse response body
 const bodyParser = require('body-parser');
 
-// connect with mongoose
-mongoose.Promise = global.Promise;
-
+// get objects from mongoose object model
 var User = require('../model/User');
 var Problem = require('../model/Problem');
 var Question = require('../model/Question');
 var Suggestion = require('../model/Suggestion');
 
 router.get('/', function(request, response) {
-/* implement authentication
-  console.log(request.session.user);
   // check if user is authenticated
   if (!request.session.user) {
     console.log("User hasent been authenticated")
-    response.render('index');
+    //response.render('index');
+    return response.redirect('/');
   }
-  else {
-    console.log("User already authenticated");
-    response.redirect('/dashboard');
-  }
-*/
-
 
   var usernames = [];
-  var metadata = [];
 
-  var usersObj = {};
+  var metaObj = {};
+  var metaObjStr;
+
   var problemObj = [];
   var problemObjStr;
 
@@ -50,14 +42,20 @@ router.get('/', function(request, response) {
   // fetch users and their metadata
   User.find({}, function(error, users) {
     assert.equal(null, error);
-    usersObj = users;
-    //console.log(usersObj);
     users.forEach(function(user) {
       if (user.username != "aether") {
         usernames.push([user.username, user.milliSeconds]);
-        metadata.push([user.username, user.email, user.key, user.posts, user.dateLastActive, user.timeLastActive]);
+        var data = {
+          "email": user.email,
+          "key": user.key,
+          "posts": user.posts,
+          "dateLastActive": user.dateLastActive,
+          "timeLastActive": user.timeLastActive
+        }
+        metaObj[user.username] = data;
       }
     });
+    metaObjStr = JSON.stringify(metaObj);
   });
 
   // fetch problems
@@ -115,16 +113,13 @@ router.get('/', function(request, response) {
     });
     suggestionObjStr = JSON.stringify(suggestionObj);
 
-    response.render('dashboard', {user: usernames, user1: usersObj,
-      metadata: metadata, problem: problemObjStr, question: questionObjStr, suggestion: suggestionObjStr});
+    // render dashboard page and pass data to html template
+    response.render('dashboard', {user: usernames, metadata: metaObjStr, problem: problemObjStr, question: questionObjStr, suggestion: suggestionObjStr});
   });
 
 });
 
 router.post('/reply', function(request, response) {
-  console.log(request.body.replyTitle);
-  console.log(request.body.replyEmail);
-  console.log(request.body.replyContent);
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -137,7 +132,7 @@ router.post('/reply', function(request, response) {
     }
   });
 
-  // setup email data with unicode symbols
+  // setup email data
   let mailOptions = {
     from: '"Aether Forms 👻" <aetherforms@gmail.com>',
     to: request.body.replyEmail,
@@ -153,7 +148,6 @@ router.post('/reply', function(request, response) {
     console.log('Message sent: %s', info.messageId);
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-    //response.render('index', {Success: 'Email has been sent!'});
     response.redirect('/dashboard');
   });
 

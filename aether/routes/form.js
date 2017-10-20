@@ -9,8 +9,10 @@ const mongoose = require('mongoose');
 // used for testing
 const assert = require('assert');
 
+// save url where to connect and save data
 var usersURL = 'mongodb://localhost:27017/users';
 
+// get objects from mongoose object model
 var User = require('../model/User');
 var Problem = require('../model/Problem');
 var Question = require('../model/Question');
@@ -19,12 +21,12 @@ var Suggestion = require('../model/Suggestion');
 // makes sure only authenticated users can access page
 router.get('/', function(request, response) {
   if (!request.session.user) {
-    console.log("User hasent been authenticated")
-    response.redirect('/');
+    console.log("User hasent been authenticated");
+    return response.redirect('/');
   }
   else {
     console.log("User already authenticated");
-    response.render('form');
+     return response.render('form');
   }
 });
 
@@ -44,7 +46,6 @@ router.post('/insert', function(request, response) {
   var username = request.session.user.username;
 
   for (var i = 0; i < dictionarySize; i+=4) {
-
     // save time and Date inserted
     var now = new Date();
     // want milliSeconds to be unique bc they will be keys in dictionary
@@ -88,6 +89,7 @@ router.post('/insert', function(request, response) {
       }
     }
 
+    // object to be inserted in user collection
     var item = {
       tag: dictionaryData[dictionaryKeys[i]],
       subtag: dictionaryData[dictionaryKeys[i+1]],
@@ -98,7 +100,6 @@ router.post('/insert', function(request, response) {
       milliSeconds: ms
     };
 
-    // print item to insert
     console.log(item);
     items.push(item);
 
@@ -151,9 +152,6 @@ router.post('/insert', function(request, response) {
     }
   }
 
-
-  console.log("preparing to insert");
-
   // update number of posts
   User.findOne({username: request.session.user.username}, function(error, user) {
     assert.equal(null, error);
@@ -182,11 +180,10 @@ router.post('/insert', function(request, response) {
 });
 
 router.get('/logout', function(request, response) {
-
+  // find user to update time and date last active
   User.findOne({username: request.session.user.username}, function(error, user) {
     assert.equal(null, error);
 
-    // update time and Date active
     var now = new Date();
     var ms = now.getTime();
     var month = now.getMonth()+1;  // janurary is 0

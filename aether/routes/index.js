@@ -22,6 +22,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 router.use(bodyParser.json());
 
+// save url where to connect and save data
 var usersURL = 'mongodb://localhost:27017/users';
 
 // need to define depricated promise
@@ -30,6 +31,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(usersURL);
 //createConnection removes warnings but doesnt actually connect
 
+// get objects from mongoose object model
 var User = require('../model/User');
 var Key = require('../model/Key');
 
@@ -61,42 +63,37 @@ console.log("server started");
 // open all static files in folder
 router.use(express.static('views'));
 
-// GET home page.
+/* GET home page.
 router.get('/', function(req, res, next) {
   console.log("rendering index page");
   res.render('index');
-});
+});*/
 
 // when register is pressed, redirect back to login(index)
 router.post('/register', function(request, response, next) {
 
-  var username = request.body.username;
-  var email = request.body.email;
-  var password = request.body.password;
-  var confirmPassword = request.body.confirmPassword;
-  var key = request.body.key;
-
   var errorMessage = "";
 
-  //mongoose
+  // create new mongoose user object to save
   var newUser = new User();
-  newUser.username = username;
-  newUser.email = email;
-  newUser.password = password;
-  newUser.key = key;
+  newUser.username = request.body.username;
+  newUser.email = request.body.email;
+  newUser.password = request.body.password;
+  newUser.key = request.body.key;
   newUser.posts = 0;
   console.log(newUser);
 
+  // check if registration passes
   var passed = true;
 
   // if email is empty - error
-  if (email == "") {
+  if (newUser.email == "") {
     errorMessage += "Email missing";
     passed = false;
   }
   // check email - if email found - error
   else {
-    User.findOne({email: email}, function(error, email) {
+    User.findOne({email: newUser.email}, function(error, email) {
       if (email) {
         errorMessage += "Email taken";
         passed = false;
@@ -104,13 +101,14 @@ router.post('/register', function(request, response, next) {
     });
   }
 
-  if (key == "") {
+  // if key is empty - error
+  if (newUser.key == "") {
     (errorMessage == "") ? errorMessage += "Key missing" : errorMessage += ", Key missing";
     passed = false;
   }
   else {
     // check key - if key not found/empty - error
-    Key.findOne({key: key}, function(error, keyFound) {
+    Key.findOne({key: newUser.key}, function(error, keyFound) {
       assert.equal(null, error);
       if (!keyFound) {
         (errorMessage == "") ? errorMessage += "Invalid Key" : errorMessage += ", Invalid Key";
@@ -119,7 +117,7 @@ router.post('/register', function(request, response, next) {
     });
 
     // check duplicate key - if key found - error
-    User.findOne({key: key}, function(error, usedKeyFound) {
+    User.findOne({key: newUser.key}, function(error, usedKeyFound) {
       assert.equal(null, error);
       if (usedKeyFound) {
         (errorMessage == "") ? errorMessage += "Key taken" : errorMessage += ", Key taken";
@@ -129,14 +127,15 @@ router.post('/register', function(request, response, next) {
 
   }
 
-  if (username == "") {
+  // if username is empty - error
+  if (newUser.username == "") {
     (errorMessage == "") ? errorMessage += "Username missing" : errorMessage = "Username missing, " + errorMessage;
     passed = false;
-    response.render('index', {regError: errorMessage});
+    return response.render('index', {regError: errorMessage});
   }
   else {
     // check username - if username already exists - error
-    User.findOne({username: username}, function(error, username) {
+    User.findOne({username: newUser.username}, function(error, username) {
       assert.equal(null, error);
       if (username) {
         (errorMessage == "") ? errorMessage += "Username taken" : errorMessage = "Username taken, " + errorMessage;
@@ -146,12 +145,12 @@ router.post('/register', function(request, response, next) {
         newUser.save(function(error, savedUser) {
           assert.equal(null, error);
           console.log("Successfully inserted " + newUser.username);
-          response.render('index', {Success: 'Registration Successful'});
+          return response.render('index', {Success: 'Registration Successful'});
         });
       }
       else {
         console.log(errorMessage);
-        response.render('index', {regError: errorMessage});
+        return response.render('index', {regError: errorMessage});
       }
     });
   }
@@ -169,8 +168,7 @@ router.post('/login', function(request, response, next) {
     username: username
   };
 
-  console.log("Preparing to check for user in database");
-
+  // check if username exists in database
   User.findOne(userInfo, function(error, user) {
     assert.equal(null, error);
 
@@ -236,8 +234,8 @@ router.post('/login', function(request, response, next) {
 
           // save user in session
           request.session.user = user;
+          // if admin user, go to admin dashboard
           if (username == "aether") {
-            //response.render('dashboard');
             response.redirect('/dashboard');
           }
           else {
@@ -255,6 +253,5 @@ router.post('/login', function(request, response, next) {
 
   });
 });
-
 
 module.exports = router;
