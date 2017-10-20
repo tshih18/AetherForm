@@ -271,7 +271,7 @@ function isValidForm() {
     }
   });
 
-
+  // handles submitting form
   if (error) {
     $('#insertMessage').html("Please make sure tags are selected and fields are filled out");
     $('#insertMessage').css("background-color", "rgb(193, 52, 9)");
@@ -285,6 +285,7 @@ function isValidForm() {
 // differentiate each section
 var sectionCount = 0;
 
+// when user clicks '+' add, it adds new form section
 function addNewSection() {
   var separation = $('#separation' + sectionCount);
   // make names for each section unique
@@ -479,13 +480,14 @@ function deleteSection(numSection) {
 
 }
 
+// handles deleting section
 $('[class^="section"]').on('click', '[id^="closeImg"]', function() {
   var splitID = $(this).attr("id").split('-');
   var numSection = splitID[1];
   deleteSection(numSection);
 })
 
-
+// handles adding new section
 $('#plus').click(function() {
     addNewSection();
 });

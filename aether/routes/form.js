@@ -22,11 +22,11 @@ var Suggestion = require('../model/Suggestion');
 router.get('/', function(request, response) {
   if (!request.session.user) {
     console.log("User hasent been authenticated");
-    return response.redirect('/');
+    response.redirect('/');
   }
   else {
     console.log("User already authenticated");
-     return response.render('form');
+    response.render('form');
   }
 });
 
