@@ -1,0 +1,168 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Aether Form</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- styles -->
+    <link href="/stylesheets/dashboard.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="bg">
+
+    <!-- main logo of webpage -->
+    <h1 id="aether-title">
+      <a href="http://www.aether1.com" id="site-link" target="_blank">
+        <div id="top-border"></div>
+        Aether<br>Bioprinter
+        <div id="bot-border"></div>
+      </a>
+    </h1>
+
+    <div class="break"></div>
+
+    <div id="heading">Dashboard</div>
+
+    <!-- Entire dashboard -->
+    <div id="dashboard">
+      <!-- Left panel of dashboard -->
+      <div id="left-panel">
+        <div id="title-user">Users</div>
+        <div id="get-user"><?user/?></div>
+        <div id="get-user1"><?user1/?></div>
+
+        <form action="/dashboard/logout" method="get">
+          <button id="logout" type="submit">Logout</button>
+        </form>
+      </div>
+
+      <!-- Right panel of dashboard -->
+      <div id="right-panel">
+        <!-- Upper tag section -->
+        <div id="tags-section">
+          <div id="tags-info">Filter results:</div>
+          <div class="tags">Problems</div>
+          <div class="tags">Questions</div>
+          <div class="tags">Suggestions</div>
+        </div>
+
+        <!-- Left metadata section -->
+        <div id="metadata-section">
+          <div id="title-metadata">Metadata</div>
+          <div id="get-metadata"><?metadata/?></div>
+          <div id="metadata">
+            <div class="meta-section">
+              <div id="email">Email: </div>
+              <div id="email-data"></div>
+            </div>
+            <div class="meta-section">
+              <div id="key">Key: </div>
+              <div id="key-data"></div>
+            </div>
+            <div class="meta-section">
+              <div id="posts">Posts: </div>
+              <div id="posts-data"></div>
+            </div>
+            <div class="meta-section">
+              <div id="dateLastActive">Date Last Active: </div>
+              <div id="dateLastActive-data"></div>
+            </div>
+            <div class="meta-section">
+              <div id="timeLastActive">Time Last Active: </div>
+              <div id="timeLastActive-data"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right display info section -->
+        <div id="display-info">
+          <div id="get-problem"><?problem/?></div>
+          <div id="get-question"><?question/?></div>
+          <div id="get-suggestion"><?suggestion/?></div>
+          <div id="data">
+            <!-- Problem subtags -->
+            <!--<div class="subtag problem" id="p-software">
+              <div class="subtag-title">Software</div>
+              <div id="p-software-data"></div>
+            </div>
+
+            <div class="subtag problem" id="p-mechanical">
+              <div class="subtag-title">Mechanical</div>
+              <div id="p-mechanical-data"></div>
+            </div>
+
+            <div class="subtag problem" id="p-electrical">
+              <div class="subtag-title">Electrical</div>
+              <div id="p-electrical-data"></div>
+            </div>
+
+            <div class="subtag problem" id="p-connectivity">
+              <div class="subtag-title">Connectivity</div>
+              <div id="p-connectivity-data"></div>
+            </div>
+
+
+            <div class="subtag problem" id="p-others">
+              <div class="subtag-title">Others</div>
+              <div id="p-others-data"></div>
+            </div>-->
+
+
+            <!-- Question subtags
+            <div class="subtag question" id="q-printer">
+              <div class="subtag-title">Printer</div>
+              <div id="q-printer-data"></div>
+            </div>
+
+
+            <div class="subtag question" id="q-software">
+              <div class="subtag-title">Software</div>
+              <div id="q-software-data"></div>
+            </div>
+
+
+            <div class="subtag question" id="q-others">
+              <div class="subtag-title">Others</div>
+              <div id="q-others-data"></div>
+            </div>-->
+
+
+            <!-- Suggestion subtags
+            <div class="subtag suggestion" id="s-configuration">
+              <div class="subtag-title">Configuration</div>
+              <div id="s-configuration-data"></div>
+            </div>
+
+            <div class="subtag suggestion" id="s-features">
+              <div class="subtag-title">Features</div>
+              <div id="s-features-data"></div>
+            </div>
+
+            <div class="subtag suggestion" id="s-others">
+              <div class="subtag-title">Others</div>
+              <div id="s-others-data"></div>
+            </div> -->
+
+          </div><!-- data -->
+        </div><!-- display info -->
+      </div><!--right panel-->
+    </div><!--dashboard-->
+
+  </div><!--background-->
+
+  <script src="/javascripts/dashboard.js" type="text/javascript"></script>
+
+
+</body>
+
+</html>

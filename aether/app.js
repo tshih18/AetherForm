@@ -1,3 +1,4 @@
+// require node package modules
 var express = require('express');
 var session = require('express-session');
 
@@ -7,18 +8,28 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// require these files
+// to use html as template engine with express
+var templ = require('simple-html-template');
+
+// require route files
 var index = require('./routes/index');
-var users = require('./routes/users');
+var forgot = require('./routes/forgot');
+var form = require('./routes/form');
+var dashboard = require('./routes/dashboard');
 
 // express is web application framework to build web APIs
 var app = express();
 
+// Middleware setup
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+// tell app that files with .html will be rendered with this template engine
+app.engine('html', templ);
+// register template engine
 app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
+// html template tags
+app.set('open_tag','<?');
+app.set('close_tag','/?>');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -32,7 +43,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes to use these files
 app.use('/', index);
-app.use('/users', users);
+app.use('/forgotPassword', forgot);
+app.use('/form', form);
+app.use('/dashboard', dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

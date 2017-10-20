@@ -1,0 +1,266 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Microsoft YaHei,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.bg {
+  /* The image used */
+  /*background-image: url(/images/aetherBackground.jpg);*/
+  background-image: url(http://bioprinting.aether1.com/wp-content/uploads/2016/08/Bioprinter-3D-Bioprinting-cost-price-for-sale.jpg);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 50px;
+}
+
+#aether-title {
+  float: left;
+  text-align: center;
+  position: relative;
+  left: 30px;
+  width: 200px;
+}
+
+#site-link {
+  color: white;
+  text-decoration: none;
+}
+
+#top-border {
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+#bot-border {
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+#viewarea {
+  margin: auto;
+  width: 90%;
+  padding: 20px;
+  /*border: 1px solid white;*/
+}
+
+#buttons {
+  height: 35px;
+  width: 200px;
+  margin: auto;
+}
+
+.button {
+  height: 30px;
+  width: 100px;
+  margin: 0 auto;
+  padding-top: 5px;
+  text-align: center;
+  font-size: 1.3em;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+}
+
+#login-button {
+  background-color: rgb(69, 196, 191);
+  float: left;
+}
+
+#register-button {
+  float: right;
+}
+
+.break {
+  clear: both;
+}
+
+#textarea {
+  /*border: 1px solid white;*/
+  border-radius: 10px;
+  margin: 0 auto;
+  padding-top: 3px;
+  text-align: center;
+  /*background-color: rgb(247, 247, 247);*/
+  /*background-color: gray;*/
+  padding-bottom: 30px;
+}
+
+#success {
+  font-size: 2em;
+  font-weight: bold;
+  margin: auto;
+  color: white;
+  background-color: #008975;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#fail {
+  font-size: 2em;
+  font-weight: bold;
+  margin: auto;
+  color: white;
+  background-color: #B82636;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.server-error {
+  font-size: 0.8em;
+  color: white;
+  background-color: #B82636;
+  text-align: center;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: white; /*rgb(198, 7, 7)*/
+  font-size: 0.8em;
+  background-color: #B82636;
+  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 3px;
+  margin-top: 10px;
+}
+
+img {
+  height: 20px;
+  position: absolute;
+}
+
+#login {
+  text-align: center;
+}
+
+.login-field {
+  height: 25px;
+  width: 150px;
+  background-color: white;
+  border-radius: 10px;
+  padding-top: 4px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.register-field {
+  height: 25px;
+  width: 150px;
+  background-color: white;
+  border-radius: 10px;
+  padding-top: 4px;
+  margin: auto;
+  float: left;
+}
+
+input {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+#register {
+  text-align: center;
+  display: none;
+}
+
+[id^='field'] {
+  margin: auto;
+  margin-bottom: 10px;
+  height: 30px;
+  width: 150px;
+}
+
+.checking {
+  float: right;
+}
+
+#check, #cross {
+  padding-top: 5px;
+  padding-left: 3px;
+  display: none;
+  /*position: absolute;
+  float: right;*/
+}
+
+#forgotButton {
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+
+#forgotButton:focus {
+  outline:0;
+}
+
+#forgotPassword {
+  display: none;
+}
+
+#forgot-container {
+  padding-top: 1px;
+  padding-bottom: 25px;
+}
+
+#forgot-message {
+  color: white;
+}
+
+#forgot-error {
+  margin: auto;
+  color: white;
+  background-color: #B82636;
+  border-radius: 10px;
+  width: 110px;
+  margin-bottom: 10px;
+}
+
+#forgotPass-field {
+  background-color: white;
+  width: 300px;
+  margin: auto;
+  padding-left: 10px;
+}
+
+#enterEmail {
+  float: left;
+  padding-top: 6px;
+  width: 260px;
+}
+
+#submitEmail {
+  background-image: url("/images/send.png");
+  background-size: contain;
+  border: none;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  color: transparent;
+  margin-left: 13px;
+}
+
+.submit {
+  width: 150px;
+  height: 30px;
+  color: white;
+  background-color: rgb(69, 196, 191);
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.3em;
+  cursor: pointer;
+}

@@ -37,6 +37,14 @@ var quill = new Quill('.editor', {
 });
 */
 
+// make server message animate
+if ($('#insertMessage').text() != "") {
+  $('#insertMessage').css("display", "none");
+  $('#insertMessage').animate({
+    height: 'toggle'
+  }, 'slow');
+}
+
 // make all dynamically added buttons work
 $('[class^="section"]').on('click', '[class^="buttons"]', function() {
   // split id on -
@@ -95,7 +103,6 @@ $('[class^="section"]').on('click', '[class^="suggestion-buttons"]', function() 
     // set value of input sub button equal to the text of sub button pressed
     var subButtonVal = $(this).text();
     $('#sub-tag-'+indexNum).val(subButtonVal);
-
 
     // make all other sub buttons lightblue
     $('.suggestion-buttons-'+indexNum).css("background-color", "rgb(69, 196, 191)");
@@ -170,9 +177,110 @@ $('#submit').click(function() {
   var value = quill.container.firstChild.innerHTML;
   console.log(key, value);*/
   console.log("submit clicked");
-
+  //alert("submit clicked");
 });
 
+
+
+// cases to not submit form - return false
+function isValidForm() {
+  // flag checking if form has errors
+  var error = false;
+  // 1. title is empty
+  $('[id^=title-]').each(function() {
+    if ($(this).val() == "") {
+      error = true;
+    }
+  });
+  // 2. content is empty
+  $('[id^=content-]').each(function() {
+    if ($(this).val() == "") {
+      error = true;
+    }
+  });
+  // 3. main tags havent been selected + 4. sub tags havent been selected
+  var begin = 0;
+  var mainTagSelected = false;
+  var subTagSelected = false;
+  $('[class^=buttons-]').each(function() {
+    begin++;
+    // when main tag is selected (gray)
+    if ($(this).css("background-color") == "rgb(128, 128, 128)") {
+      mainTagSelected = true;
+
+      // need to check if a subtag has been selected
+      //var mainTag = $(this).html();
+      var mainTagId = $(this).attr("id");
+      var mainTagIdSplit = mainTagId.split('-');
+      var tag = mainTagIdSplit[0];
+      var mainTagNum = mainTagIdSplit[mainTagIdSplit.length-1];
+      // check if subtag has been selected
+      switch(tag) {
+        case "problems":
+          $('.problem-buttons-'+mainTagNum).each(function() {
+            if ($(this).css("background-color") == "rgb(128, 128, 128)") {
+              subTagSelected = true;
+            }
+          });
+          if (!subTagSelected) {
+            error = true;
+            console.log("problem Sub tag not selected");
+            return false;
+          }
+          break;
+        case "questions":
+          $('.question-buttons-'+mainTagNum).each(function() {
+            if ($(this).css("background-color") == "rgb(128, 128, 128)") {
+              subTagSelected = true;
+            }
+          });
+          if (!subTagSelected) {
+            error = true;
+            console.log("question Sub tag not selected");
+            return false;
+          }
+          break;
+        case "suggestions":
+          $('.suggestion-buttons-'+mainTagNum).each(function() {
+            if ($(this).css("background-color") == "rgb(128, 128, 128)") {
+              subTagSelected = true;
+            }
+          });
+          if (!subTagSelected) {
+            error = true;
+            console.log("suggestion Sub tag not selected");
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+
+
+    }
+    // after every section check if main tag is selected
+    if (begin == 3) {
+      if (!mainTagSelected) {
+        error = true;
+        console.log("main tag not selected");
+        return false;
+      }
+      begin = 0;
+      mainTagSelected = false;
+      subTagSelected = false;
+    }
+  });
+
+
+  if (error) {
+    $('#insertMessage').html("Please make sure tags are selected and fields are filled out");
+    $('#insertMessage').css("background-color", "rgb(193, 52, 9)");
+    return false;
+  }
+  else {
+    return true;
+  }
+}
 
 // differentiate each section
 var sectionCount = 0;

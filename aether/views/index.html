@@ -12,7 +12,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- styles -->
-    <link href="/stylesheets/loginStyle.css" rel="stylesheet">
+    <link href="/stylesheets/login.css" rel="stylesheet">
+
+    <!-- Avoid favicon requests -->
+    <!--<link rel="icon" href="data:;base64,=">-->
 
 </head>
 
@@ -32,6 +35,10 @@
     <div class="break"></div>
 
     <div id="viewarea">
+
+      <div id="success"><?Success/?></div>
+      <div id="fail"><?Fail/?></div>
+
       <!-- Buttons -->
       <div id="buttons">
         <div class="button" id="login-button">Login</div>
@@ -43,54 +50,111 @@
       <div id="textarea">
         <!-- Login Form -->
         <form id="login" action="/login" method="post">
-          <div class="label">Login</div>
-          <input type="text" name="username" placeholder="Username"><br>
-          <input type="text" name="password" placeholder="Password"><br>
+          <p class="server-error"><?logError/?></p>
+
+          <div class="login-field">
+            <input type="text" name="username" placeholder="Username"><br>
+          </div>
+
+          <div class="break"></div>
+
+          <div class="login-field">
+            <input type="password" name="password" placeholder="Password"><br>
+          </div>
+
+          <div class="break"></div>
+
           <button type="submit" class="submit">Submit</button>
+        </form>
+
+        <div class="break"></div>
+
+        <!-- Forgot Password -->
+        <button type="button" id="forgotButton">Forgot Password?</button>
+
+        <form id="forgotPassword" action="/forgotPassword" method="post">
+          <div id="forgot-container">
+
+            <div id="forgot-info">
+              <p id="forgot-message">Please enter email used when signing up. An email will be sent to you with a link to reset your password.</p>
+              <p id="forgot-error"><?forgotError/?></p>
+            </div>
+            <div id="forgotPass-field">
+              <input type="text" name="email" id="enterEmail" placeholder="Enter email">
+              <input type="submit" id="submitEmail">
+            </div>
+          </div>
         </form>
 
         <!-- Register Form -->
         <form id="register" name="register" action="/register" method="post">
-          <div class="label">Register</div>
+
+          <p class="server-error"><?regError/?></p>
+
           <div id="field-username">
             <div class="error"></div>
-            <input type="text" id="username" name="username" placeholder="Username">
-            <img id="check" src="/images/check.png">
-            <img id="cross" src="/images/cross.png">
-            <br>
+            <div class="register-field">
+              <input type="text" id="username" name="username" placeholder="Username">
+            </div>
+            <div class="checking">
+              <img id="check" src="/images/check.png">
+              <img id="cross" src="/images/cross.png">
+            </div>
           </div>
+
+          <div class="break"></div>
 
           <div id="field-email">
             <div class="error"></div>
-            <input type="text" id="email" name="email" placeholder="Email">
-            <img id="check" src="/images/check.png">
-            <img id="cross" src="/images/cross.png">
-            <br>
+            <div class="register-field">
+              <input type="text" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="checking">
+              <img id="check" src="/images/check.png">
+              <img id="cross" src="/images/cross.png">
+            </div>
           </div>
+
+          <div class="break"></div>
 
           <div id="field-key">
             <div class="error"></div>
-            <input type="text" id="key" name="key" placeholder="Key">
-            <img id="check" src="/images/check.png">
-            <img id="cross" src="/images/cross.png">
-            <br>
+            <div class="register-field">
+              <input type="text" id="key" name="key" placeholder="Key">
+            </div>
+            <div class="checking">
+              <img id="check" src="/images/check.png">
+              <img id="cross" src="/images/cross.png">
+            </div>
           </div>
+
+          <div class="break"></div>
 
           <div id="field-password">
             <div class="error"></div>
-            <input type="text" id="password" name="password" placeholder="Password">
-            <img id="check" src="/images/check.png">
-            <img id="cross" src="/images/cross.png">
-            <br>
+            <div class="register-field">
+              <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="checking">
+              <img id="check" src="/images/check.png">
+              <img id="cross" src="/images/cross.png">
+            </div>
           </div>
+
+          <div class="break"></div>
 
           <div id="field-confirmPassword">
             <div class="error"></div>
-            <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
-            <img id="check" src="/images/check.png">
-            <img id="cross" src="/images/cross.png">
-            <br>
+            <div class="register-field">
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+            </div>
+            <div class="checking">
+              <img id="check" src="/images/check.png">
+              <img id="cross" src="/images/cross.png">
+            </div>
           </div>
+
+          <div class="break"></div>
 
           <button type="submit" class="submit">Submit</button>
         </form>
@@ -101,8 +165,6 @@
 
   <script src="/javascripts/login.js" type="text/javascript"></script>
 
-
-</div>
 </body>
 
 </html>

@@ -1,0 +1,236 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Microsoft YaHei,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.bg {
+  /* The image used */
+  /*background-image: url(/images/aetherBackground.jpg);*/
+  background-image: url(http://bioprinting.aether1.com/wp-content/uploads/2016/08/Bioprinter-3D-Bioprinting-cost-price-for-sale.jpg);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*padding-bottom: 50px;*/
+}
+
+#aether-title {
+  float: left;
+  text-align: center;
+  position: relative;
+  left: 30px;
+  width: 200px;
+}
+
+#site-link {
+  color: white;
+  text-decoration: none;
+}
+
+#top-border {
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+#bot-border {
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  height: 10px;
+}
+
+.break {
+  clear: both;
+}
+
+#heading {
+  margin: auto;
+  text-align: center;
+  color: white;
+  font-size: 3em;
+}
+
+#dashboard {
+  margin: auto;
+  height: 500px;
+  width: 100%;
+  background-color: #E2E1DF;
+}
+
+#left-panel {
+  float: left;
+  height: 500px;
+  width: 15%;
+  background-color: #333333;
+  color: white;
+  text-align: center;
+}
+
+#logout {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 15%;
+  border: none;
+  background-color: rgb(69, 196, 191);
+  color: white;
+  font-size: 1em;
+}
+
+#title-user {
+  font-size: 1.5em;
+}
+
+[id^='title-'] {
+  margin-bottom: 10px;
+  padding: 5px 0 5px 0;
+  background-color: rgb(69, 196, 191);
+  text-align: center;
+  font-size: 1em;
+}
+
+[id^='get'] {
+  opacity: 0;
+  font-size: 0;
+}
+
+.users {
+  margin-bottom: 5px;
+}
+
+/*.users:hover {
+  background-color: gray;
+}*/
+
+.user {
+  font-size: 1em;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  float: left;
+}
+
+.activity {
+  float: right;
+  margin-right: 5px;
+}
+
+#right-panel {
+  height: 100%;
+  width: 85%;
+  background-color: #4C4743;
+  float: left;
+  color: white;
+}
+
+#tags-section {
+  text-align: center;
+  height: 40px;
+  width: 405px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+#tags-info {
+  float: left;
+  margin: 6px 3px 10px 3px;
+}
+
+.tags {
+  float: left;
+  margin: 3px;
+  background-color: rgb(69, 196, 191);
+  padding: 3px 10px 3px 10px;
+  border-radius: 10px;
+}
+
+#metadata-section {
+  background-color: gray;
+  height: 80%;
+  width: 20%;
+  float: left;
+  margin-left: 20px;
+}
+
+.meta-section {
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+
+#display-info {
+  background-color: #333333; /*#F7F7F7;*/
+  height: 80%;
+  width: 72%;
+  float: right;
+  margin-right: 20px;
+  overflow: auto;
+}
+
+#data {
+  /*padding: 5px 0 5px 0;*/
+}
+
+.subtag-title {
+  color: white;
+  padding: 5px 0 5px 10px;
+  background-color: rgb(69, 196, 191);
+  font-size: 1em;
+}
+
+[id^=section] {
+  background-color: gray;
+  padding: 3px 10px 3px 10px;
+}
+
+.titles {
+  font-size: 1.2em;
+  font-weight: bold;
+  float: left;
+}
+
+.contents {
+  float: left;
+  width: 87%;
+}
+
+.dates {
+  float: right;
+}
+
+.times {
+  float: right;
+}
+
+#reply-title {
+  border: none;
+  margin: 10px 0 5px 0;
+  height: 20px;
+  width: 70%;
+}
+
+#reply-email {
+  display: none;
+}
+
+#reply-content {
+  height: 200px;
+  width: 99%;
+  margin: 0;
+  border: none;
+}
+
+#arrow {
+  height: 30px;
+  margin: auto;
+  display: block;
+
+  bottom: 0;
+}

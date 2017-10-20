@@ -6,7 +6,13 @@ var userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
-  key: String
+  key: String,
+  posts: Number,
+  dateLastActive: String,
+  timeLastActive: String,
+  milliSeconds: Number,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 userSchema.pre('save', function(next) {

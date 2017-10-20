@@ -20,7 +20,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- styles -->
-    <link href="/stylesheets/formStyle.css" rel="stylesheet">
+    <link href="/stylesheets/form.css" rel="stylesheet">
+
+    <!-- Avoid favicon requests
+    <link rel="icon" href="data:;base64,="> -->
 
 </head>
 
@@ -39,10 +42,12 @@
 
       <div class="break"></div>
 
-      <!-- website tit  le -->
+      <div id="insertMessage"><?message/?></div>
+
+      <!-- website title -->
       <div id="site-title">Aether Form</div>
 
-      <form action="/insert" method="post">
+      <form action="/form/insert" method="post" onsubmit="return isValidForm()">
 
         <!-- Where users will fill out their name to know where to save data
         <div id="username-field">
@@ -95,18 +100,22 @@
           <div id="separation0"></div>
         </div>
 
+        <img src="/images/plus.png" id="plus">
+
         <div id="saveButton">
-          <button type="submit" id="submit">Save</button>
+          <button type="submit" id="submit">Submit</button>
         </div>
 
       </form>
 
-      <img src="/images/plus.png" id="plus">
+      <form action="/form/logout" method="get">
+        <button id="logout" type="submit">Logout</button>
+      </form>
 
     </div>
 
-
-    <form action="/getData" method="post">
+<!--
+    <form action="/form/getData" method="post">
       <h4>Get Data</h4>
       Collection Name: <input type="text" id="collectionName" name="collectionName">
       <button type="submit">Get Data</button>
@@ -115,7 +124,7 @@
     <br>
 
 
-    <form action="/deleteData" method="post">
+    <form action="/form/deleteData" method="post">
       <h4>Delete Data</h4>
 
       Collection Name: <input type="text" id="collectionName" name="collectionName">
@@ -129,9 +138,7 @@
 
     <a href="displayJSON.html">Load JSON</a>
 
-    <form action="/logout" method="get">
-      <button type="submit">Logout</button>
-    </form>
+-->
 
 
 
