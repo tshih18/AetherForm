@@ -85,7 +85,7 @@ body, html {
 }
 
 #textarea {
-  border: 1px solid white;
+  /*border: 1px solid white;*/
   border-radius: 10px;
   margin: 0 auto;
   padding-top: 3px;
