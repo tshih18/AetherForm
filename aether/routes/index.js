@@ -25,7 +25,7 @@ router.use(bodyParser.json());
 
 // save url where to connect and save data
 //var usersURL = 'mongodb://localhost:27017/users';
-var usersURL = process.env.MONGOLAB_URL;
+var usersURL = process.env.MONGOLAB_URI;
 
 
 // need to define depricated promise
