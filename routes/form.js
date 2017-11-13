@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 
 // save url where to connect and save data
-var usersURL = 'mongodb://localhost:27017/users';
+//var usersURL = 'mongodb://localhost:27017/users';
+var usersURL = process.env.MONGOLAB_URI;
 
 // get objects from mongoose object model
 var User = require('../model/User');

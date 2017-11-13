@@ -23,13 +23,10 @@ router.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 router.use(bodyParser.json());
 
-// save url where to connect and save data
-var usersURL = 'mongodb://localhost:27017/users';
-
 // need to define depricated promise
 mongoose.Promise = global.Promise;
-// connect with mongoose once
-mongoose.connect(usersURL);
+// url to connect with mongoose once
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/users');
 //createConnection removes warnings but doesnt actually connect
 
 // get objects from mongoose object model
