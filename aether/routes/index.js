@@ -25,11 +25,13 @@ router.use(bodyParser.json());
 
 // save url where to connect and save data
 //var usersURL = 'mongodb://localhost:27017/users';
+var usersURL = process.env.MONGOLAB_URL;
+
 
 // need to define depricated promise
 mongoose.Promise = global.Promise;
 // connect with mongoose once
-//mongoose.connect(usersURL);
+mongoose.connect(usersURL);
 //createConnection removes warnings but doesnt actually connect
 
 // get objects from mongoose object model
@@ -60,6 +62,7 @@ var jsonURL = "http://localhost:3000/displayJSON.html";
 
 // upon runinng server
 console.log("server started");
+
 
 // open all static files in folder
 router.use(express.static('views'));
