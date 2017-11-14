@@ -153,6 +153,7 @@ img {
   background-color: white;
   border-radius: 10px;
   padding-top: 4px;
+  padding-left: 4px;
   margin: auto;
   margin-bottom: 10px;
 }
@@ -163,6 +164,7 @@ img {
   background-color: white;
   border-radius: 10px;
   padding-top: 4px;
+  padding-left: 4px;
   margin: auto;
   float: left;
 }
