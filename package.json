@@ -16,7 +16,7 @@
     "kerberos": "~0.0.17",
     "mongod": "^2.0.0",
     "mongodb": "^2.2.33",
-    "mongoose": "^4.13.2",
+    "mongoose": "^4.10.8",
     "morgan": "~1.8.1",
     "nodemailer": "^4.4.0",
     "phantom": "^4.0.5",

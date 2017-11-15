@@ -26,8 +26,15 @@ router.use(bodyParser.json());
 // need to define depricated promise
 mongoose.Promise = global.Promise;
 // url to connect with mongoose once
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/users');
 //createConnection removes warnings but doesnt actually connect
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/users');
+/*mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/users', {
+  socketTimeoutMS: 0,
+  keepAlive: true,
+  reconnectTries: 30,
+  useMongoClient: true
+});*/
+
 
 // get objects from mongoose object model
 var User = require('../model/User');
